@@ -48,6 +48,15 @@
 <script>
   window.store = {
     
+      "timestamp-python-bat-cpp-c-2020-06-11-17-34-25-timestamp-html": {
+        "title": "Getting timestamp",
+        "author": "fgrando",
+        "category": "",
+        "content": "Getting timestamp in python:import datetimenow = datetime.datetime.now()timestamp = now.strftime('%Y-%m-%d_%H:%M:%S'.format(now))print (timestamp)Getting timestamp in batch:@echo offSETLOCALCALL :GetTimestamp nowecho timestamp = %now%EXIT /b %ERRORLEVEL%:GetTimestampFOR /F %%A IN ('WMIC OS GET LocalDateTime ^| FINDSTR \\.') DO @SET B=%%ASET y=%B:~0,4%SET mo=%B:~4,2%SET d=%B:~6,2%SET h=%B:~8,2%SET m=%B:~10,2%SET s=%B:~12,2%SET timestamp=%d%-%mo%-%y% %h%:%m%:%s%SET \"%~1=%d%-%timestamp%\"EXIT /B 0",
+        "url": "/timestamp/python/bat/cpp/c/2020/06/11/17-34-25_timestamp.html"
+      }
+      ,
+    
       "template-model-1992-06-04-template-html": {
         "title": "Template post for copy-paste",
         "author": "fgrando",
@@ -62,7 +71,12 @@
 <script src="/js/lunr.min.js"></script>
 <script src="/js/search.js"></script>
 <h2 class="post-list-heading">Posts</h2>
-    <ul class="post-list"><li><span class="post-meta">Jun 4, 1992</span>
+    <ul class="post-list"><li><span class="post-meta">Jun 11, 2020</span>
+        <h3>
+          <a class="post-link" href="/timestamp/python/bat/cpp/c/2020/06/11/17-34-25_timestamp.html">
+            Getting timestamp
+          </a>
+        </h3></li><li><span class="post-meta">Jun 4, 1992</span>
         <h3>
           <a class="post-link" href="/template/model/1992/06/04/template.html">
             Template post for copy-paste
