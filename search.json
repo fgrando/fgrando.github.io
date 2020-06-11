@@ -1,16 +1,14 @@
----
----
 [
-  {% for post in site.posts %}
+  
     {
 
-      "title"    : "{{ post.title | escape }}",
-      "url"      : "{{ site.baseurl }}{{ post.url }}",
-      "category" : "{{ post.category }}",
-      "tags"     : "{{ post.tags | join: ', ' }}",
-      "date"     : "{{ post.date }}",
-      "discription" : "{{post.description | strip_html | strip_newlines | escape }}"
+      "title"    : "Template post for copy-paste",
+      "url"      : "/template/model/1992/06/04/template.html",
+      "category" : "",
+      "tags"     : "",
+      "date"     : "1992-06-04 12:00:00 -0300",
+      "discription" : ""
 
-    } {% unless forloop.last %},{% endunless %}
-  {% endfor %}
+    } 
+  
 ]
