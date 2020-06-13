@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-06-11T19:11:29-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Garagem</title><subtitle>Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis.</subtitle><entry><title type="html">Getting timestamp</title><link href="http://localhost:4000/timestamp/python/bat/cpp/c/2020/06/11/17-34-25_timestamp.html" rel="alternate" type="text/html" title="Getting timestamp" /><published>2020-06-11T17:34:25-03:00</published><updated>2020-06-11T17:34:25-03:00</updated><id>http://localhost:4000/timestamp/python/bat/cpp/c/2020/06/11/17:34:25_timestamp</id><content type="html" xml:base="http://localhost:4000/timestamp/python/bat/cpp/c/2020/06/11/17-34-25_timestamp.html">&lt;p&gt;Getting timestamp in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python&lt;/code&gt;:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-06-13T19:32:13-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Garagem</title><subtitle>Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis.</subtitle><entry><title type="html">UnitTest in Visual Studio (Native Unit Test Project)</title><link href="http://localhost:4000/cpp/unittest/test/visualstudio/2020/06/13/19-12-16_unittest_visualstudio.html" rel="alternate" type="text/html" title="UnitTest in Visual Studio (Native Unit Test Project)" /><published>2020-06-13T19:12:16-03:00</published><updated>2020-06-13T19:12:16-03:00</updated><id>http://localhost:4000/cpp/unittest/test/visualstudio/2020/06/13/19:12:16_unittest_visualstudio</id><content type="html" xml:base="http://localhost:4000/cpp/unittest/test/visualstudio/2020/06/13/19-12-16_unittest_visualstudio.html">&lt;p&gt;Example of unit test project features in Visual Studio 2013.&lt;/p&gt;
+
+&lt;p&gt;Snippet example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &quot;stdafx.h&quot;
+#include &quot;CppUnitTest.h&quot;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;VisualStudio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CppUnitTestFramework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UnitTestExample&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Show test window at menu: TEST &amp;gt; Windows &amp;gt; Test Explorer&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TEST_CLASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UnitTestExample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;public:&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// There are configurations of priority or playlists&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// but the most effective I found is to enforce &lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// the execution order by the test names:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;TEST_METHOD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UT001_FIRST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;This will go to 'Output' section&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;TEST_METHOD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UT002_SECOND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsTrue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;L&quot;Message printed when it fails&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LINE_INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+        &lt;span class=&quot;n&quot;&gt;TEST_METHOD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UT003_AAAAA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wstringstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Nice message&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; with variables &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AreNotEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LINE_INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2020-06-13-19:12:16_unittest_visualstudio.data/unittest.png&quot; alt=&quot;VisualStudio&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Source files &lt;a href=&quot;/assets/2020-06-13-19:12:16_unittest_visualstudio.data/UnitTest1.zip&quot;&gt;here&lt;/a&gt;&lt;/p&gt;</content><author><name>fgrando</name></author><summary type="html"></summary></entry><entry><title type="html">Getting timestamp</title><link href="http://localhost:4000/timestamp/python/bat/cpp/c/2020/06/11/17-34-25_timestamp.html" rel="alternate" type="text/html" title="Getting timestamp" /><published>2020-06-11T17:34:25-03:00</published><updated>2020-06-11T17:34:25-03:00</updated><id>http://localhost:4000/timestamp/python/bat/cpp/c/2020/06/11/17:34:25_timestamp</id><content type="html" xml:base="http://localhost:4000/timestamp/python/bat/cpp/c/2020/06/11/17-34-25_timestamp.html">&lt;p&gt;Getting timestamp in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python&lt;/code&gt;:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
 
