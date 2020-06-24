@@ -48,6 +48,15 @@
 <script>
   window.store = {
     
+      "cpp-software-sw-2020-06-24-20-36-55-elapsed-time-measurement-html": {
+        "title": "Measuring elapsed time",
+        "author": "fgrando",
+        "category": "",
+        "content": "Measuring time using C++ 11#include &lt;chrono&gt;std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();cout &lt;&lt; \"put busy operation here\" &lt;&lt; endl;std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();std::cout &lt;&lt; \"elapsed: \"             &lt;&lt; std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt; (end - begin).count()            &lt;&lt; \" ns\" &lt;&lt; std::endl;",
+        "url": "/cpp/software/sw/2020/06/24/20-36-55_elapsed_time_measurement.html"
+      }
+      ,
+    
       "cpp-unittest-test-visualstudio-2020-06-13-19-12-16-unittest-visualstudio-html": {
         "title": "UnitTest in Visual Studio (Native Unit Test Project)",
         "author": "fgrando",
@@ -80,7 +89,12 @@
 <script src="/js/lunr.min.js"></script>
 <script src="/js/search.js"></script>
 <h2 class="post-list-heading">Posts</h2>
-    <ul class="post-list"><li><span class="post-meta">Jun 13, 2020</span>
+    <ul class="post-list"><li><span class="post-meta">Jun 24, 2020</span>
+        <h3>
+          <a class="post-link" href="/cpp/software/sw/2020/06/24/20-36-55_elapsed_time_measurement.html">
+            Measuring elapsed time
+          </a>
+        </h3></li><li><span class="post-meta">Jun 13, 2020</span>
         <h3>
           <a class="post-link" href="/cpp/unittest/test/visualstudio/2020/06/13/19-12-16_unittest_visualstudio.html">
             UnitTest in Visual Studio (Native Unit Test Project)
