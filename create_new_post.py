@@ -4,6 +4,7 @@ import os
 import sys
 import datetime
 import shutil
+import re
 
 if len(sys.argv) < 2:
     print("provide post name as argument")
@@ -19,11 +20,13 @@ posts_root = os.path.join(root, '_posts')
 assets_root = os.path.join(root, 'assets')
 
 # new post settings
-title = sys.argv[1]
+title_display = sys.argv[1]
+title = re.sub('\s','_', title_display)
 now = datetime.datetime.now()
 
 date_now = now.strftime('%Y-%m-%d'.format(now))
-hour_now = now.strftime('%H:%M:%S'.format(now))
+hour_now = now.strftime('%H_%M_%S'.format(now))
+hour_display = now.strftime('%H:%M:%S'.format(now))
 
 post_name = date_now + '-' + hour_now + '_' + title
 
@@ -59,8 +62,8 @@ text = fd.read()
 fd.close()
 
 text = text.replace("1992-06-04-template.data", assets)
-text = text.replace("Template post for copy-paste", title)
-text = text.replace("1992-06-04 12:00:00", "{} {}".format(date_now, hour_now))
+text = text.replace("Template post for copy-paste", title_display)
+text = text.replace("1992-06-04 12:00:00", "{} {}".format(date_now, hour_display))
 
 fd = open(post_path, 'w')
 fd.write(text)
