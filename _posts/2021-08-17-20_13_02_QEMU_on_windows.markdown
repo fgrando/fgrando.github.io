@@ -1,0 +1,33 @@
+---
+layout: post
+title:  "QEMU on windows"
+date:   2021-08-17 20:13:02 -0300
+categories: template model
+author: fgrando
+---
+{% assign data = "/assets/2021-08-17-20_13_02_QEMU_on_windows.data/" %}
+
+Steps to setup a running PPC vm in Windows with QEMU.
+
+### Get QEMU
+[Windows releases](https://qemu.weilnetz.de/w64/)
+
+### Get Lubuntu 14
+[Lubuntu 14 releases](http://mirror.datto.com/ubuntu-releases/lubuntu/releases/14.04.4/release/)
+
+### Add QEMU to path
+`set PATH=%PATH%;"C:\Program Files\qemu"`
+
+### Create Disk
+`qemu-img create -f qcow2 be1/lubuntu14.qcow2 16G`
+
+Note: the disks is kept inside `./be1` folder.
+
+### Install OS
+`qemu-system-ppc -L pc-bios -boot d -M mac99,via=pmu -m 1024 -hda be1/lubuntu14.qcow2 -cdrom lubuntu-14.04.5-desktop-powerpc.iso`
+
+### Run OS
+`qemu-system-ppc -L pc-bios -boot c -prom-env "boot-device=hd:,\yaboot" -prom-env "boot-args=conf=hd:,\yaboot.conf" -M mac99,via=pmu -m 2048 -hda be1/lubuntu14.qcow2 -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::10022-:22`
+
+### Connect via SSH
+`ssh user@localhost -p 10022`
