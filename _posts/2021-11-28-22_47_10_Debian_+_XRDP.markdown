@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "Debian + XRDP"
+date:   2021-11-28 22:47:10 -0300
+categories: template model
+author: fgrando
+---
+# Tested on Debian 11:
+{% highlight sh %}
+root@deblx:/home/user# apt install xfce4 xfce4-goodies xorg dbus-x11 x11-xserver-utils
+root@deblx:/home/user# apt install xrdp
+root@deblx:/home/user# adduser xrdp ssl-cert
+root@deblx:/home/user# systemctl restart xrdp
+user@deblx:~$ echo xfce4-session >~/.xsession
+{% endhighlight %}
