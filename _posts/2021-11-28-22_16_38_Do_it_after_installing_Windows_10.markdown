@@ -9,18 +9,18 @@ author: fgrando
 # Free more disk space avoiding hibernation:
 Open cmd as administrator;
 {% highlight bat %}
-`powercfg -h off`
+powercfg -h off
 {% endhighlight %}
 
 # Uninstall bloatware
 PowerShell as administrator:
 {% highlight ps %}
-`Get-AppxPackage -AllUsers | Remove-AppxPackage`
+Get-AppxPackage -AllUsers | Remove-AppxPackage
 {% endhighlight %}
 
 Put back the Microsoft store:
 {% highlight ps %}
-`Get-AppxPackage -allusers Microsoft.WindowsStore | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}`
+Get-AppxPackage -allusers Microsoft.WindowsStore | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
 {% endhighlight %}
 
 Now it is a good time to install the camera and calculator apps back (from MS store).
