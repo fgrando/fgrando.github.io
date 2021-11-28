@@ -24,7 +24,7 @@ Get-AppxPackage -allusers Microsoft.WindowsStore | Foreach {Add-AppxPackage -Dis
 {% endhighlight %}
 
 Now it is a good time to install the camera and calculator apps back (from MS store).
-As image viewer you can use FastStone [https://www.faststone.org/]
+As image viewer you can use [FastStone](https://www.faststone.org)
 
 # Configuring updates
 Open Group Policy Editor (`gpedit.msc`):
