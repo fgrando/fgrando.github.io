@@ -6,7 +6,7 @@ categories: gcc packed ms_struct gcc_struct
 author: fgrando
 ---
 
-This program has different in windows and linux even when compiled with similar same GCC versions.
+This program gives different outputs in windows and linux, even when compiled with similar same GCC versions.
 Fortunately, it is not a bug and just a matter of compiler flags.
 
 {% highlight c %}
