@@ -31,3 +31,36 @@ Note: the disks is kept inside `./be1` folder.
 
 ### Connect via SSH
 `ssh user@localhost -p 10022`
+
+
+### ARM
+Based on this post this are the commands for a quick ARM setup: https://gist.github.com/billti/d904fd6124bf6f10ba2c1e3736f0f0f7
+
+`start.bat`:
+
+```
+REM Ubuntu & BIOS images: 
+REM https://cloud-images.ubuntu.com/releases/xenial/release/
+REM https://releases.linaro.org/components/kernel/uefi-linaro/latest/release/qemu64/
+
+"c:\Program Files\qemu\qemu-system-aarch64.exe" ^
+-m 2048 ^
+-cpu cortex-a72 -smp 4 ^
+-nographic ^
+-M virt ^
+-bios QEMU_EFI.fd ^
+-drive if=none,file=ubuntu-16.04-server-cloudimg-arm64-uefi1.img,id=hd0 ^
+-device virtio-blk-device,drive=hd0 ^
+-drive file=user-data.img,format=raw ^
+-device virtio-net-device,netdev=net0 ^
+-netdev user,hostfwd=tcp:127.0.0.1:22022-:22,id=net0
+
+REM Expanding the image size by 8GB
+REM shutdown the vm
+REM "c:\Program Files\qemu\qemu-img.exe" resize ubuntu-16.04-server-cloudimg-arm64-uefi1.img +8G
+REM start the vm, ssh into it and enter the following command
+REM sudo growpart /dev/vda 1
+REM reboot
+
+REM ssh -l ubuntu localhost -p 22022 asdfqwer
+```
