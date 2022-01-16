@@ -39,9 +39,19 @@ Based on this post this are the commands for a quick ARM setup: https://gist.git
 `start.bat`:
 
 ```
+
 REM Ubuntu & BIOS images: 
 REM https://cloud-images.ubuntu.com/releases/xenial/release/
 REM https://releases.linaro.org/components/kernel/uefi-linaro/latest/release/qemu64/
+
+REM Expanding the image size by 8GB
+REM shutdown the vm
+REM "c:\Program Files\qemu\qemu-img.exe" resize ubuntu-16.04-server-cloudimg-arm64-uefi1.img +8G
+REM start the vm, ssh into it and enter the following command
+REM sudo growpart /dev/vda 1
+REM reboot
+
+REM ssh -l ubuntu localhost -p 22022 asdfqwer
 
 "c:\Program Files\qemu\qemu-system-aarch64.exe" ^
 -m 2048 ^
@@ -55,12 +65,57 @@ REM https://releases.linaro.org/components/kernel/uefi-linaro/latest/release/qem
 -device virtio-net-device,netdev=net0 ^
 -netdev user,hostfwd=tcp:127.0.0.1:22022-:22,id=net0
 
-REM Expanding the image size by 8GB
-REM shutdown the vm
-REM "c:\Program Files\qemu\qemu-img.exe" resize ubuntu-16.04-server-cloudimg-arm64-uefi1.img +8G
-REM start the vm, ssh into it and enter the following command
-REM sudo growpart /dev/vda 1
-REM reboot
+```
 
-REM ssh -l ubuntu localhost -p 22022 asdfqwer
+### i386
+```
+REM Create disk
+REM "c:\Program Files\qemu\qemu-img.exe" create hdd_i386.img 20G
+
+REM Install commands
+REM "c:\Program Files\qemu\qemu-system-i386.exe" ^
+REM -m 2048 ^
+REM -boot d -cdrom ubuntu-16.04.6-server-i386.iso ^
+REM -hda hdd_i386.img ^
+REM -device e1000,netdev=net0 ^
+REM -netdev user,id=net0,hostfwd=tcp::22386-:22
+
+REM ssh -l user localhost -p 22386 user
+
+REM run
+"c:\Program Files\qemu\qemu-system-i386.exe" ^
+-m 2048 ^
+-boot c ^
+-nographic ^
+-hda hdd_i386.img ^
+-device e1000,netdev=net0 ^
+-netdev user,id=net0,hostfwd=tcp::22386-:22
+```
+
+### PowerPc64
+```
+REM Create disk
+REM "c:\Program Files\qemu\qemu-img.exe" create  hdd_ppc64el.img 20G
+
+REM Install commands
+REM "c:\Program Files\qemu\qemu-system-ppc64.exe" ^
+REM -m 2G ^
+REM -M pseries -smp cores=1,threads=1 ^
+REM -cdrom ubuntu-16.04.4-server-ppc64el.iso ^
+REM -device spapr-vscsi -drive file=hdd_ppc64el.img ^
+REM -device e1000,netdev=net0 ^
+REM -netdev user,id=net0,hostfwd=tcp::22064-:22
+
+REM -nographic -nodefaults -serial stdio ^
+
+REM ssh -l user localhost -p 22064 user
+
+REM run
+"c:\Program Files\qemu\qemu-system-ppc64.exe" ^
+-m 2G ^
+-nographic ^
+-M pseries -smp cores=1,threads=1 ^
+-device spapr-vscsi -drive file=hdd_ppc64el.img ^
+-device e1000,netdev=net0 ^
+-netdev user,id=net0,hostfwd=tcp::22064-:22
 ```
