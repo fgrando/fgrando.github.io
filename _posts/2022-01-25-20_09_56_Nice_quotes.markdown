@@ -1,0 +1,18 @@
+---
+layout: post
+title:  "Nice quotes"
+date:   2022-01-25 20:09:56 -0300
+categories: template model
+author: fgrando
+---
+{% assign data = "/assets/2022-01-25-20_09_56_Nice_quotes.data/" %}
+
+## Tony Hoare
+    One way is to make it so simple there are obviously no deficiencies, and the other way is to make it so complicated that there are no obvious deficiencies.
+  
+    http://alloytools.org/tutorials/day-course/s1_logic.pdf
+
+## Richard P. Feynman
+    The first principle is that you must not fool yourself, and you are the easiest person to fool.
+    
+    http://alloytools.org/tutorials/day-course/s1_logic.pdf
