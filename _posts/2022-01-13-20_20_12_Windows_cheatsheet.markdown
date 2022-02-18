@@ -17,7 +17,7 @@ author: fgrando
 
 `netplwiz` Config to allow login without password
 
-`sysdm.cpl` Enable remote desktop access
+`sysdm.cpl` System properties; Env vars; Enable remote desktop access
 
 `GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}` Create a folder with this name shows lots of settings.
 
