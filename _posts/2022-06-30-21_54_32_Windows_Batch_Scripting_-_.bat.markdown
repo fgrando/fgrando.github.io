@@ -19,7 +19,43 @@ ECHO Bat File Drive = %~d0
 ECHO Full File Name = %~n0%~x0
 ECHO File Name Without Extension = %~n0
 ECHO File Extension = %~x0
+
+SET STARTDIR="%~dp0"
+SET ARG1=%1
+SET ARG2=%2
 {% endhighlight %}
+
+
+
+Python temporary env
+{% highlight batch %}
+
+SET PYENV="%~dp0\tempy"
+SET PYTMP"%~dp0\tempy\Scripts\python"
+SET PIPTMP"%~dp0\tempy\Scripts\pip"
+
+python -m venv %PYENV%
+%PIPTMP% freeze
+
+%PYTMP% -V
+{% endhighlight %}
+
+
+
+Usual labels for GOTO
+{% highlight batch %}
+
+GOTO END
+
+:END
+ECHO Done!
+EXIT /B0
+
+:FAIL
+ECHO FAILED!
+EXIT /B 1
+{% endhighlight %}
+
 
 
 Check if a file exists:
@@ -33,18 +69,40 @@ IF EXIST %filepath% (
 IF NOT EXIST %filepath% (
     ECHO not found!
 )
+
+IF NOT EXIST "C:\Program Files\7-Zip\7z" (
+    WHERE 7z
+    IF "%ERRORLEVEL%" == "1" (
+        ECHO 7zip not found!
+    )
+)
 {% endhighlight %}
+
 
 
 List all files in a directory:
 {% highlight batch %}
-FOR /f tokens^=* %%i in ('where .:*')DO (
+FOR /F tokens^=* %%i IN ('where .:*')DO (
 	ECHO/ Path: %%~dpi ^| Name: %%~nxi
+)
+
+FOR /F tokens^=* %%i IN ('where /r %FOLDER% *.txt')DO (
+	ECHO/ Path: %%~dpi ^| Name: %%~nxi
+)
+{% endhighlight %}
+
+
+
+Checked mounted drives with subst:
+{% highlight batch %}
+FOR /F "delims=\" %%i IN ('SUBST')DO (
+    IF "%%i" == "X:" (
+        ECHO Drive X is already mounted
+    )
 )
 
 FOR /f tokens^=* %%i in ('where /r %FOLDER% *.txt')DO (
 	ECHO/ Path: %%~dpi ^| Name: %%~nxi
 )
 {% endhighlight %}
-
 

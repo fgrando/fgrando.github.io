@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Windows Batch Scripting - .bat | Garagem</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Windows Batch Scripting - .bat" />
+<meta name="author" content="fgrando" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis." />
+<meta property="og:description" content="Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis." />
+<link rel="canonical" href="http://localhost:4000/programming/batch/bat/windows/win32/2022/07/01/21_54_32_Windows_Batch_Scripting_-_.bat.html" />
+<meta property="og:url" content="http://localhost:4000/programming/batch/bat/windows/win32/2022/07/01/21_54_32_Windows_Batch_Scripting_-_.bat.html" />
+<meta property="og:site_name" content="Garagem" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-01T02:54:32+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Windows Batch Scripting - .bat" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/programming/batch/bat/windows/win32/2022/07/01/21_54_32_Windows_Batch_Scripting_-_.bat.html","headline":"Windows Batch Scripting - .bat","dateModified":"2022-07-01T02:54:32+02:00","datePublished":"2022-07-01T02:54:32+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/programming/batch/bat/windows/win32/2022/07/01/21_54_32_Windows_Batch_Scripting_-_.bat.html"},"author":{"@type":"Person","name":"fgrando"},"@type":"BlogPosting","description":"Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Garagem" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Garagem</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Windows Batch Scripting - .bat</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-07-01T02:54:32+02:00" itemprop="datePublished">Jul 1, 2022
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">fgrando</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    
+<p>Useful batch snippets</p>
+
+<p>Get the script start directory:</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">ECHO</span> <span class="kd">Current</span> <span class="kd">Directory</span> <span class="o">=</span> <span class="vm">%~dp0</span>
+<span class="kd">ECHO</span> <span class="kd">Object</span> <span class="kd">Name</span> <span class="kd">With</span> <span class="kd">Quotations</span><span class="o">=</span><span class="err">%</span><span class="m">0</span>
+<span class="kd">ECHO</span> <span class="kd">Object</span> <span class="kd">Name</span> <span class="kd">Without</span> <span class="kd">Quotes</span><span class="o">=</span><span class="err">%</span><span class="o">~</span><span class="m">0</span>
+<span class="kd">ECHO</span> <span class="kd">Bat</span> <span class="kd">File</span> <span class="kd">Drive</span> <span class="o">=</span> <span class="vm">%~d0</span>
+<span class="kd">ECHO</span> <span class="kd">Full</span> <span class="kd">File</span> <span class="kd">Name</span> <span class="o">=</span> <span class="vm">%~n0%~x0</span>
+<span class="kd">ECHO</span> <span class="kd">File</span> <span class="kd">Name</span> <span class="kd">Without</span> <span class="kd">Extension</span> <span class="o">=</span> <span class="vm">%~n0</span>
+<span class="kd">ECHO</span> <span class="kd">File</span> <span class="kd">Extension</span> <span class="o">=</span> <span class="vm">%~x0</span>
+
+<span class="kd">SET</span> <span class="kd">STARTDIR</span><span class="o">=</span><span class="s2">"</span><span class="vm">%~dp0</span><span class="s2">"</span>
+<span class="kd">SET</span> <span class="kd">ARG1</span><span class="o">=</span><span class="err">%</span><span class="m">1</span>
+<span class="kd">SET</span> <span class="kd">ARG2</span><span class="o">=</span><span class="err">%</span><span class="m">2</span></code></pre></figure>
+
+<p>Python temporary env</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">SET</span> <span class="kd">PYENV</span><span class="o">=</span><span class="s2">"</span><span class="vm">%~dp0</span><span class="s2">\tempy"</span>
+<span class="kd">SET</span> <span class="kd">PYTMP</span><span class="s2">"</span><span class="vm">%~dp0</span><span class="s2">\tempy\Scripts\python"</span>
+<span class="kd">SET</span> <span class="kd">PIPTMP</span><span class="s2">"</span><span class="vm">%~dp0</span><span class="s2">\tempy\Scripts\pip"</span>
+
+<span class="kd">python</span> <span class="na">-m </span><span class="kd">venv</span> <span class="nv">%PYENV%</span>
+<span class="nv">%PIPTMP%</span> <span class="kd">freeze</span>
+
+<span class="nv">%PYTMP%</span> <span class="na">-V</span></code></pre></figure>
+
+<p>Usual labels for GOTO</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">GOTO</span> <span class="kd">END</span>
+
+<span class="nl">:END</span>
+<span class="kd">ECHO</span> <span class="kd">Done</span><span class="err">!</span>
+<span class="kd">EXIT</span> <span class="na">/B</span><span class="m">0</span>
+
+<span class="nl">:FAIL</span>
+<span class="kd">ECHO</span> <span class="kd">FAILED</span><span class="err">!</span>
+<span class="kd">EXIT</span> <span class="na">/B </span><span class="m">1</span></code></pre></figure>
+
+<p>Check if a file exists:</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">IF</span> <span class="kd">EXIST</span> <span class="nv">%filepath%</span> <span class="o">(</span>
+    <span class="kd">ECHO</span> <span class="kd">exists</span><span class="err">!</span>
+<span class="o">)</span> <span class="kd">ELSE</span> <span class="o">(</span>
+    <span class="kd">ECHO</span> <span class="ow">not</span> <span class="kd">found</span><span class="err">!</span>
+<span class="o">)</span>
+
+<span class="kd">IF</span> <span class="kd">NOT</span> <span class="kd">EXIST</span> <span class="nv">%filepath%</span> <span class="o">(</span>
+    <span class="kd">ECHO</span> <span class="ow">not</span> <span class="kd">found</span><span class="err">!</span>
+<span class="o">)</span>
+
+<span class="kd">IF</span> <span class="kd">NOT</span> <span class="kd">EXIST</span> <span class="s2">"C:\Program Files\7-Zip\7z"</span> <span class="o">(</span>
+    <span class="kd">WHERE</span> <span class="m">7</span><span class="kd">z</span>
+    <span class="kd">IF</span> <span class="s2">"</span><span class="nv">%ERRORLEVEL%</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"1"</span> <span class="o">(</span>
+        <span class="kd">ECHO</span> <span class="m">7</span><span class="kd">zip</span> <span class="ow">not</span> <span class="kd">found</span><span class="err">!</span>
+    <span class="o">)</span>
+<span class="o">)</span></code></pre></figure>
+
+<p>List all files in a directory:</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">FOR</span> <span class="na">/F </span><span class="kd">tokens</span><span class="se">^=</span><span class="o">*</span> <span class="vm">%%i</span> <span class="kd">IN</span> <span class="o">(</span><span class="s1">'where .:*'</span><span class="o">)</span><span class="kd">DO</span> <span class="o">(</span>
+	<span class="kd">ECHO</span>/ <span class="kd">Path</span>: <span class="vm">%%~dpi</span> <span class="se">^|</span> <span class="kd">Name</span>: <span class="vm">%%~nxi</span>
+<span class="o">)</span>
+
+<span class="kd">FOR</span> <span class="na">/F </span><span class="kd">tokens</span><span class="se">^=</span><span class="o">*</span> <span class="vm">%%i</span> <span class="kd">IN</span> <span class="o">(</span><span class="s1">'where /r </span><span class="nv">%FOLDER%</span><span class="s1"> *.txt'</span><span class="o">)</span><span class="kd">DO</span> <span class="o">(</span>
+	<span class="kd">ECHO</span>/ <span class="kd">Path</span>: <span class="vm">%%~dpi</span> <span class="se">^|</span> <span class="kd">Name</span>: <span class="vm">%%~nxi</span>
+<span class="o">)</span></code></pre></figure>
+
+<p>Checked mounted drives with subst:</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">FOR</span> <span class="na">/F </span><span class="s2">"delims=\"</span> <span class="vm">%%i</span> <span class="kd">IN</span> <span class="o">(</span><span class="s1">'SUBST'</span><span class="o">)</span><span class="kd">DO</span> <span class="o">(</span>
+    <span class="kd">IF</span> <span class="s2">"</span><span class="vm">%%i</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"X:"</span> <span class="o">(</span>
+        <span class="kd">ECHO</span> <span class="kd">Drive</span> <span class="kd">X</span> <span class="kd">is</span> <span class="kd">already</span> <span class="kd">mounted</span>
+    <span class="o">)</span>
+<span class="o">)</span>
+
+<span class="kd">FOR</span> <span class="na">/f </span><span class="kd">tokens</span><span class="se">^=</span><span class="o">*</span> <span class="vm">%%i</span> <span class="k">in</span> <span class="o">(</span><span class="s1">'where /r </span><span class="nv">%FOLDER%</span><span class="s1"> *.txt'</span><span class="o">)</span><span class="kd">DO</span> <span class="o">(</span>
+	<span class="kd">ECHO</span>/ <span class="kd">Path</span>: <span class="vm">%%~dpi</span> <span class="se">^|</span> <span class="kd">Name</span>: <span class="vm">%%~nxi</span>
+<span class="o">)</span></code></pre></figure>
+
+
+  </div><a class="u-url" href="/programming/batch/bat/windows/win32/2022/07/01/21_54_32_Windows_Batch_Scripting_-_.bat.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Garagem</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Garagem</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/fgrando"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">fgrando</span></a></li><li><a href="https://www.twitter.com/fgrando"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">fgrando</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
