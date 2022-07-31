@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Get datetime info on Windows CLI | Garagem</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Get datetime info on Windows CLI" />
+<meta name="author" content="fgrando" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis." />
+<meta property="og:description" content="Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis." />
+<link rel="canonical" href="http://localhost:4000/template/model/2021/10/10/11_43_01_Get_datetime_info_on_Windows_CLI.html" />
+<meta property="og:url" content="http://localhost:4000/template/model/2021/10/10/11_43_01_Get_datetime_info_on_Windows_CLI.html" />
+<meta property="og:site_name" content="Garagem" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-10T16:43:01+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Get datetime info on Windows CLI" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/template/model/2021/10/10/11_43_01_Get_datetime_info_on_Windows_CLI.html","headline":"Get datetime info on Windows CLI","dateModified":"2021-10-10T16:43:01+02:00","datePublished":"2021-10-10T16:43:01+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/template/model/2021/10/10/11_43_01_Get_datetime_info_on_Windows_CLI.html"},"author":{"@type":"Person","name":"fgrando"},"@type":"BlogPosting","description":"Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Garagem" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Garagem</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Get datetime info on Windows CLI</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-10-10T16:43:01+02:00" itemprop="datePublished">Oct 10, 2021
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">fgrando</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    
+<p>The date and time settings in use can be listed using PowerShell:</p>
+
+<figure class="highlight"><pre><code class="language-powershell" data-lang="powershell"><span class="n">PS</span><span class="w"> </span><span class="nx">C:\Users\fgrando</span><span class="err">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">get-culture</span><span class="p">)</span><span class="o">.</span><span class="nf">DateTimeFormat</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">fl</span><span class="w"> </span><span class="nt">-property</span><span class="w"> </span><span class="o">*</span><span class="w">
+
+
+</span><span class="n">AMDesignator</span><span class="w">                     </span><span class="p">:</span><span class="w"> </span><span class="nx">AM</span><span class="w">
+</span><span class="n">Calendar</span><span class="w">                         </span><span class="p">:</span><span class="w"> </span><span class="nx">System.Globalization.GregorianCalendar</span><span class="w">
+</span><span class="n">DateSeparator</span><span class="w">                    </span><span class="p">:</span><span class="w"> </span><span class="o">-</span><span class="w">
+</span><span class="n">FirstDayOfWeek</span><span class="w">                   </span><span class="p">:</span><span class="w"> </span><span class="nx">Sunday</span><span class="w">
+</span><span class="n">CalendarWeekRule</span><span class="w">                 </span><span class="p">:</span><span class="w"> </span><span class="nx">FirstDay</span><span class="w">
+</span><span class="n">FullDateTimePattern</span><span class="w">              </span><span class="p">:</span><span class="w"> </span><span class="nx">dddd</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="nx">MMMM</span><span class="p">,</span><span class="w"> </span><span class="nx">yyyy</span><span class="w"> </span><span class="nx">HH:mm:ss</span><span class="w">
+</span><span class="n">LongDatePattern</span><span class="w">                  </span><span class="p">:</span><span class="w"> </span><span class="nx">dddd</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="nx">MMMM</span><span class="p">,</span><span class="w"> </span><span class="nx">yyyy</span><span class="w">
+</span><span class="n">LongTimePattern</span><span class="w">                  </span><span class="p">:</span><span class="w"> </span><span class="nx">HH:mm:ss</span><span class="w">
+</span><span class="n">MonthDayPattern</span><span class="w">                  </span><span class="p">:</span><span class="w"> </span><span class="nx">MMMM</span><span class="w"> </span><span class="nx">d</span><span class="w">
+</span><span class="n">PMDesignator</span><span class="w">                     </span><span class="p">:</span><span class="w"> </span><span class="nx">PM</span><span class="w">
+</span><span class="n">RFC1123Pattern</span><span class="w">                   </span><span class="p">:</span><span class="w"> </span><span class="nx">ddd</span><span class="p">,</span><span class="w"> </span><span class="nx">dd</span><span class="w"> </span><span class="nx">MMM</span><span class="w"> </span><span class="nx">yyyy</span><span class="w"> </span><span class="nx">HH</span><span class="s1">':'</span><span class="nx">mm</span><span class="s1">':'</span><span class="nx">ss</span><span class="w"> </span><span class="s1">'GMT'</span><span class="w">
+</span><span class="n">ShortDatePattern</span><span class="w">                 </span><span class="p">:</span><span class="w"> </span><span class="nx">dd-MMM-yy</span><span class="w">
+</span><span class="n">ShortTimePattern</span><span class="w">                 </span><span class="p">:</span><span class="w"> </span><span class="nx">HH:mm</span><span class="w">
+</span><span class="n">SortableDateTimePattern</span><span class="w">          </span><span class="p">:</span><span class="w"> </span><span class="nx">yyyy</span><span class="s1">'-'</span><span class="nx">MM</span><span class="s1">'-'</span><span class="nx">dd</span><span class="s1">'T'</span><span class="nx">HH</span><span class="s1">':'</span><span class="nx">mm</span><span class="s1">':'</span><span class="nx">ss</span><span class="w">
+</span><span class="n">TimeSeparator</span><span class="w">                    </span><span class="p">:</span><span class="w"> </span><span class="p">:</span><span class="w">
+</span><span class="n">UniversalSortableDateTimePattern</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nx">yyyy</span><span class="s1">'-'</span><span class="nx">MM</span><span class="s1">'-'</span><span class="nx">dd</span><span class="w"> </span><span class="nx">HH</span><span class="s1">':'</span><span class="nx">mm</span><span class="s1">':'</span><span class="nx">ss</span><span class="s1">'Z'</span><span class="w">
+</span><span class="n">YearMonthPattern</span><span class="w">                 </span><span class="p">:</span><span class="w"> </span><span class="nx">MMMM</span><span class="w"> </span><span class="nx">yyyy</span><span class="w">
+</span><span class="n">AbbreviatedDayNames</span><span class="w">              </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">Sun</span><span class="p">,</span><span class="w"> </span><span class="nx">Mon</span><span class="p">,</span><span class="w"> </span><span class="nx">Tue</span><span class="p">,</span><span class="w"> </span><span class="nx">Wed...</span><span class="p">}</span><span class="w">
+</span><span class="n">ShortestDayNames</span><span class="w">                 </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">Su</span><span class="p">,</span><span class="w"> </span><span class="nx">Mo</span><span class="p">,</span><span class="w"> </span><span class="nx">Tu</span><span class="p">,</span><span class="w"> </span><span class="nx">We...</span><span class="p">}</span><span class="w">
+</span><span class="n">DayNames</span><span class="w">                         </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">Sunday</span><span class="p">,</span><span class="w"> </span><span class="nx">Monday</span><span class="p">,</span><span class="w"> </span><span class="nx">Tuesday</span><span class="p">,</span><span class="w"> </span><span class="nx">Wednesday...</span><span class="p">}</span><span class="w">
+</span><span class="n">AbbreviatedMonthNames</span><span class="w">            </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">Jan</span><span class="p">,</span><span class="w"> </span><span class="nx">Feb</span><span class="p">,</span><span class="w"> </span><span class="nx">Mar</span><span class="p">,</span><span class="w"> </span><span class="nx">Apr...</span><span class="p">}</span><span class="w">
+</span><span class="n">MonthNames</span><span class="w">                       </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">January</span><span class="p">,</span><span class="w"> </span><span class="nx">February</span><span class="p">,</span><span class="w"> </span><span class="nx">March</span><span class="p">,</span><span class="w"> </span><span class="nx">April...</span><span class="p">}</span><span class="w">
+</span><span class="n">IsReadOnly</span><span class="w">                       </span><span class="p">:</span><span class="w"> </span><span class="nx">False</span><span class="w">
+</span><span class="n">NativeCalendarName</span><span class="w">               </span><span class="p">:</span><span class="w"> </span><span class="nx">Gregorian</span><span class="w"> </span><span class="nx">Calendar</span><span class="w">
+</span><span class="n">AbbreviatedMonthGenitiveNames</span><span class="w">    </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">Jan</span><span class="p">,</span><span class="w"> </span><span class="nx">Feb</span><span class="p">,</span><span class="w"> </span><span class="nx">Mar</span><span class="p">,</span><span class="w"> </span><span class="nx">Apr...</span><span class="p">}</span><span class="w">
+</span><span class="n">MonthGenitiveNames</span><span class="w">               </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">January</span><span class="p">,</span><span class="w"> </span><span class="nx">February</span><span class="p">,</span><span class="w"> </span><span class="nx">March</span><span class="p">,</span><span class="w"> </span><span class="nx">April...</span><span class="p">}</span></code></pre></figure>
+
+<p>This info is also available in the GUI executing <code class="language-plaintext highlighter-rouge">Intl.cpl</code></p>
+
+  </div><a class="u-url" href="/template/model/2021/10/10/11_43_01_Get_datetime_info_on_Windows_CLI.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Garagem</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Garagem</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/fgrando"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">fgrando</span></a></li><li><a href="https://www.twitter.com/fgrando"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">fgrando</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Blog usado para compartilhar código, exemplos, modelos, projetos e coisas potencialmente úteis.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -7,6 +7,10 @@ author: fgrando
 ---
 {% assign data = "/assets/2022-01-13-20_20_12_Windows_cheatsheet.data/" %}
 
+# Prompt
+`mode` List all COM ports 
+
+
 # Commands
 
 `eventvwr.msc` Event viewer.
