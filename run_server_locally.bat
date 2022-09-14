@@ -1,2 +1,4 @@
-echo  bundle exec jekyll serve
-echo  firefox http://localhost:4000
+@ECHO OFF
+
+ECHO  bundle exec jekyll serve
+ECHO  firefox http://localhost:4000

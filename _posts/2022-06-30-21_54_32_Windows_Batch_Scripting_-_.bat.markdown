@@ -20,9 +20,6 @@ ECHO Full File Name = %~n0%~x0
 ECHO File Name Without Extension = %~n0
 ECHO File Extension = %~x0
 
-SET STARTDIR="%~dp0"
-SET ARG1=%1
-SET ARG2=%2
 {% endhighlight %}
 
 
@@ -40,10 +37,21 @@ python -m venv %PYENV%
 %PYTMP% -V
 {% endhighlight %}
 
-
-
 Usual labels for GOTO
 {% highlight batch %}
+SET STARTDIR="%~dp0"
+SET ARG1=%1
+SET ARG2=%2
+
+IF "%FOLDER%" == "" (
+    ECHO Missing argument.
+)
+
+CALL somescript.bat
+IF NOT "%ERRORLEVEL%" == "0" (
+    ECHO Failed to run command
+    GOTO FAIL
+)
 
 GOTO END
 
@@ -51,11 +59,25 @@ GOTO END
 ECHO Done!
 EXIT /B0
 
+:SHOW_USAGE_AND_FAIL
+ECHO Usage: %0 <argmument>
+GOTO FAIL
+
 :FAIL
 ECHO FAILED!
 EXIT /B 1
+
 {% endhighlight %}
 
+
+Kill a task
+{% highlight batch %}
+FOR /F "TOKENS=1,2,* delims==, " %%a IN ('TASKLIST /FI "WindowTitle -eq %NAME% /NH /FO CSV') DO (
+    SET PID_FOUND=%%b
+    ECHO Kill %NAME% %%b
+    TASKKILL /PID %%b /F
+)
+{% endhighlight %}
 
 
 Check if a file exists:

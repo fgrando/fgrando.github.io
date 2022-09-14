@@ -59,11 +59,7 @@
 <span class="kd">ECHO</span> <span class="kd">Bat</span> <span class="kd">File</span> <span class="kd">Drive</span> <span class="o">=</span> <span class="vm">%~d0</span>
 <span class="kd">ECHO</span> <span class="kd">Full</span> <span class="kd">File</span> <span class="kd">Name</span> <span class="o">=</span> <span class="vm">%~n0%~x0</span>
 <span class="kd">ECHO</span> <span class="kd">File</span> <span class="kd">Name</span> <span class="kd">Without</span> <span class="kd">Extension</span> <span class="o">=</span> <span class="vm">%~n0</span>
-<span class="kd">ECHO</span> <span class="kd">File</span> <span class="kd">Extension</span> <span class="o">=</span> <span class="vm">%~x0</span>
-
-<span class="kd">SET</span> <span class="kd">STARTDIR</span><span class="o">=</span><span class="s2">"</span><span class="vm">%~dp0</span><span class="s2">"</span>
-<span class="kd">SET</span> <span class="kd">ARG1</span><span class="o">=</span><span class="err">%</span><span class="m">1</span>
-<span class="kd">SET</span> <span class="kd">ARG2</span><span class="o">=</span><span class="err">%</span><span class="m">2</span></code></pre></figure>
+<span class="kd">ECHO</span> <span class="kd">File</span> <span class="kd">Extension</span> <span class="o">=</span> <span class="vm">%~x0</span></code></pre></figure>
 
 <p>Python temporary env</p>
 
@@ -78,15 +74,41 @@
 
 <p>Usual labels for GOTO</p>
 
-<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">GOTO</span> <span class="kd">END</span>
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">SET</span> <span class="kd">STARTDIR</span><span class="o">=</span><span class="s2">"</span><span class="vm">%~dp0</span><span class="s2">"</span>
+<span class="kd">SET</span> <span class="kd">ARG1</span><span class="o">=</span><span class="err">%</span><span class="m">1</span>
+<span class="kd">SET</span> <span class="kd">ARG2</span><span class="o">=</span><span class="err">%</span><span class="m">2</span>
+
+<span class="kd">IF</span> <span class="s2">"</span><span class="nv">%FOLDER%</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">(</span>
+    <span class="kd">ECHO</span> <span class="kd">Missing</span> <span class="kd">argument</span>.
+<span class="o">)</span>
+
+<span class="kd">CALL</span> <span class="kd">somescript</span>.bat
+<span class="kd">IF</span> <span class="kd">NOT</span> <span class="s2">"</span><span class="nv">%ERRORLEVEL%</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"0"</span> <span class="o">(</span>
+    <span class="kd">ECHO</span> <span class="kd">Failed</span> <span class="kd">to</span> <span class="nb">run</span> <span class="kd">command</span>
+    <span class="kd">GOTO</span> <span class="kd">FAIL</span>
+<span class="o">)</span>
+
+<span class="kd">GOTO</span> <span class="kd">END</span>
 
 <span class="nl">:END</span>
 <span class="kd">ECHO</span> <span class="kd">Done</span><span class="err">!</span>
 <span class="kd">EXIT</span> <span class="na">/B</span><span class="m">0</span>
 
+<span class="nl">:SHOW</span>_USAGE_AND_FAIL
+<span class="kd">ECHO</span> <span class="kd">Usage</span>: <span class="err">%</span><span class="m">0</span> <span class="o">&lt;</span><span class="kd">argmument</span><span class="o">&gt;</span>
+<span class="kd">GOTO</span> <span class="kd">FAIL</span>
+
 <span class="nl">:FAIL</span>
 <span class="kd">ECHO</span> <span class="kd">FAILED</span><span class="err">!</span>
 <span class="kd">EXIT</span> <span class="na">/B </span><span class="m">1</span></code></pre></figure>
+
+<p>Kill a task</p>
+
+<figure class="highlight"><pre><code class="language-batch" data-lang="batch"><span class="kd">FOR</span> <span class="na">/F </span><span class="s2">"TOKENS=1,2,* delims==, "</span> <span class="vm">%%a</span> <span class="kd">IN</span> <span class="o">(</span><span class="s1">'TASKLIST /FI "WindowTitle -eq </span><span class="nv">%NAME%</span><span class="s1"> /NH /FO CSV'</span><span class="o">)</span> <span class="kd">DO</span> <span class="o">(</span>
+    <span class="kd">SET</span> <span class="kd">PID_FOUND</span><span class="o">=</span><span class="vm">%%b</span>
+    <span class="kd">ECHO</span> <span class="kd">Kill</span> <span class="nv">%NAME%</span> <span class="vm">%%b</span>
+    <span class="kd">TASKKILL</span> <span class="na">/PID </span><span class="vm">%%b</span> <span class="na">/F
+</span><span class="o">)</span></code></pre></figure>
 
 <p>Check if a file exists:</p>
 
