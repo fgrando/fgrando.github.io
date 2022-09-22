@@ -22,7 +22,7 @@ fail() {
   exit 1
 }
 
-if [ -z "$MYARG" ]; then 
+if [ -z "$MYARG" ]; then
   echo Arg is empty
   fail
 fi
@@ -39,4 +39,33 @@ if [ $? -ne 0 ]; then
 fi
 
 exit 0
+{% endhighlight %}
+
+
+{% highlight sh %}
+#!/bin/bash
+NAME="autorun-exec"
+RET=0
+
+already_running() {
+        counter=0
+        pids=$(pgrep -d " " $NAME)
+        for p in $pids; do
+                (( counter=counter+1 ))
+                echo $counter: running with PID $p
+        done
+        RET=$counter
+}
+
+
+# Abort if we are running already
+already_running
+if [ $RET -gt 0 ]; then
+        echo Exit: $NAME is already running.
+        exit
+fi
+
+
+echo Starting process...
+sleep 300
 {% endhighlight %}

@@ -4,6 +4,7 @@ title:  "Snippets in Python"
 date:   2022-09-20 10:08:39 -0300
 categories: python programming
 author: fgrando
+
 ---
 {% assign data = "/assets/2022-09-20-10_08_39_Snippets_in_Python.data/" %}
 
