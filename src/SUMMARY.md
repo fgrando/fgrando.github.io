@@ -3,12 +3,6 @@
 [Garagem Blog](posts.md)
 
 ---
-# Lorem Ipsum section
-
-- [LoremIpsum](./chapter_1.md)
-    - [another](./chapter_2.md)
-- [memes](misc/meme-gallery.md)
-    - [linux](misc/linux.md)
 
 # Posts
 
