@@ -1,5 +1,8 @@
 # Garagem
-This is my [blog](about.md). You can use the search (`s`) to find content here.
+|||
+|:---|:---:|
+This is my [blog](about.md), mostly with code snippets and interesting stuff - like this LED on the right. Using the search (`s`) is easier to find things here. | ![:)](misc/breaker-led.jpg)
+|||
 
 # Posts
 - [Quotes](misc/quotes.md)
