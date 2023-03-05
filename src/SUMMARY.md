@@ -22,3 +22,4 @@
 - [Measuring elapsed time](posts/2023.03.05-21.15.03/Measuring_elapsed_time.md)
 - [GPU com Proxmox e Windows 10](posts/2023.03.05-21.17.20/Usando_GPU_com_Proxmox_e_Windows_10.md)
 - [Native UnitTest Visual Studio](posts/2023.03.05-21.18.40/UnitTest_in_Visual_Studio_Native_Unit_Test_Project_.md)
+- [NGINX configs](posts/2023.03.05-22.25.42/NGINX_configs.md)
