@@ -14,3 +14,4 @@ This is my [blog](about.md). You can use the search (`s`) to find content here.
 - [05/Mar/2023: console injection](posts/2023.03.05-20.11.49/console_injection.md)
 - [05/Mar/2023: Python snippets](posts/2023.03.05-20.59.58/Python_snippets.md)
 - [05/Mar/2023: Bash snippets](posts/2023.03.05-21.01.33/Bash_snippets.md)
+- [05/Mar/2023: VirtualBox raw hd access](posts/2023.03.05-21.04.49/VirtualBox_raw_hd_access.md)

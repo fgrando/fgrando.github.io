@@ -18,6 +18,7 @@
 
 `GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}` Create a folder with this name shows lots of settings.
 
+`Intl.cpl` Regional settings dialog.
 
 
 ## Keyboard Shortcuts
@@ -28,7 +29,16 @@
 
 `Windows + Alt + g` Xbox game bar that allows you to record the screen among other things.
 
-# After Windows 10 Installation
+## List USBs
+```powershell
+Get-PnpDevice -PresentOnly | Where-Object {$_. InstanceId -match '^USB'}
+```
+
+
+
+
+# Windows 10 Cleanup
+Do this after a fresh windows installation
 ## Free more disk space avoiding hibernation:
 Open cmd as administrator;
 ```batch

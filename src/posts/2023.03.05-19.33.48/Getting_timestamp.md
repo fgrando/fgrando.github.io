@@ -66,3 +66,38 @@ SET timestamp=%d%-%mo%-%y% %h%:%m%:%s%
 SET "%~1=%d%-%timestamp%"
 EXIT /B 0
 ```
+
+## The date and time settings in use can be listed using PowerShell:
+```powershell
+PS C:\Users\fgrando> (get-culture).DateTimeFormat | fl -property *
+
+
+AMDesignator                     : AM
+Calendar                         : System.Globalization.GregorianCalendar
+DateSeparator                    : -
+FirstDayOfWeek                   : Sunday
+CalendarWeekRule                 : FirstDay
+FullDateTimePattern              : dddd, d MMMM, yyyy HH:mm:ss
+LongDatePattern                  : dddd, d MMMM, yyyy
+LongTimePattern                  : HH:mm:ss
+MonthDayPattern                  : MMMM d
+PMDesignator                     : PM
+RFC1123Pattern                   : ddd, dd MMM yyyy HH':'mm':'ss 'GMT'
+ShortDatePattern                 : dd-MMM-yy
+ShortTimePattern                 : HH:mm
+SortableDateTimePattern          : yyyy'-'MM'-'dd'T'HH':'mm':'ss
+TimeSeparator                    : :
+UniversalSortableDateTimePattern : yyyy'-'MM'-'dd HH':'mm':'ss'Z'
+YearMonthPattern                 : MMMM yyyy
+AbbreviatedDayNames              : {Sun, Mon, Tue, Wed...}
+ShortestDayNames                 : {Su, Mo, Tu, We...}
+DayNames                         : {Sunday, Monday, Tuesday, Wednesday...}
+AbbreviatedMonthNames            : {Jan, Feb, Mar, Apr...}
+MonthNames                       : {January, February, March, April...}
+IsReadOnly                       : False
+NativeCalendarName               : Gregorian Calendar
+AbbreviatedMonthGenitiveNames    : {Jan, Feb, Mar, Apr...}
+MonthGenitiveNames               : {January, February, March, April...}
+```
+
+This info is also available in the GUI executing `Intl.cpl`

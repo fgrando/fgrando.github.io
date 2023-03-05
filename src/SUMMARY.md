@@ -17,3 +17,4 @@
 - [console injection](posts/2023.03.05-20.11.49/console_injection.md)
 - [Python snippets](posts/2023.03.05-20.59.58/Python_snippets.md)
 - [Bash snippets](posts/2023.03.05-21.01.33/Bash_snippets.md)
+- [VirtualBox raw hd access](posts/2023.03.05-21.04.49/VirtualBox_raw_hd_access.md)
