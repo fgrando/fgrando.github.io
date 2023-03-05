@@ -29,9 +29,18 @@
 
 `Windows + Alt + g` Xbox game bar that allows you to record the screen among other things.
 
-## List USBs
+# List USBs
 ```powershell
 Get-PnpDevice -PresentOnly | Where-Object {$_. InstanceId -match '^USB'}
+```
+
+# Add stuff to PATH for a particular session
+I needed to run QEMU for a project, but did not want to change my `%PATH%` variable adding the QEMU instalation path just for a temporary thing.
+
+My solution was to create a `qemu-cli.bat` that launches a prompt with `%PATH%`:
+
+```batch
+cmd /K set PATH=%PATH%;"C:\Program Files\qemu"
 ```
 
 
@@ -68,5 +77,5 @@ Open Group Policy Editor (`gpedit.msc`):
 - Computer Configuration -> Administrative Templates -> Windows Components -> Application compatibility -> Turn off application telemetry.
 - Computer Configuration -> Administrative Templates -> Windows Components -> Data collection and preview builds -> Allow telemetry - 0 (security).
 
-# Sources
+## Sources
 Special thanks to Dr. Rodrigo Cadore and Dr. Ramon Fernandes for those tips.

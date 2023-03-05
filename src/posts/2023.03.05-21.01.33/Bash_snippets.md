@@ -61,3 +61,13 @@ fi
 echo Starting process...
 sleep 300
 ```
+
+# Colors
+Set in bash PS1 variable like this:
+
+```bash
+export PS1="\e[47m[\t]\e[0m \u@\[\e[0m\]\[\e[01;37m\]\h\[\e[0m\]\[\e[00;37m\]\\$ \w\n\[\e[0m\]"
+```
+Sources:
+- https://wiki.archlinux.org/index.php/Color_Bash_Prompt
+- http://bashrcgenerator.com/

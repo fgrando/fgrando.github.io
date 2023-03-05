@@ -15,3 +15,7 @@ This is my [blog](about.md). You can use the search (`s`) to find content here.
 - [05/Mar/2023: Python snippets](posts/2023.03.05-20.59.58/Python_snippets.md)
 - [05/Mar/2023: Bash snippets](posts/2023.03.05-21.01.33/Bash_snippets.md)
 - [05/Mar/2023: VirtualBox raw hd access](posts/2023.03.05-21.04.49/VirtualBox_raw_hd_access.md)
+- [05/Mar/2023: Convert PDF to Text](posts/2023.03.05-21.11.00/Convert_PDF_to_Text.md)
+- [05/Mar/2023: Measuring elapsed time](posts/2023.03.05-21.15.03/Measuring_elapsed_time.md)
+- [05/Mar/2023: Usando GPU com Proxmox e Windows 10](posts/2023.03.05-21.17.20/Usando_GPU_com_Proxmox_e_Windows_10.md)
+- [05/Mar/2023: UnitTest in Visual Studio (Native Unit Test Project)](posts/2023.03.05-21.18.40/UnitTest_in_Visual_Studio_Native_Unit_Test_Project_.md)
