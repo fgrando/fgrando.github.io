@@ -13,3 +13,4 @@
 - [Useful batch scripts](posts/2023.03.05-19.59.07/Useful_batch_scripts.md)
 - [QEMU on Windows](posts/2023.03.05-20.02.27/QEMU_on_Windows.md)
 - [XRDP setup](posts/2023.03.05-20.07.12/XRDP_setup.md)
+- [GCC and __attribute__((packed)) in Linux & Windows](posts/2023.03.05-20.09.41/GCC_and_attribute_packed_in_Linux_Windows.md)
