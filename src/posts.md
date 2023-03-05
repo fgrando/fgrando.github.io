@@ -11,3 +11,4 @@ This is my [blog](about.md). You can use the search (`s`) to find content here.
 - [05/Mar/2023: QEMU on Windows](posts/2023.03.05-20.02.27/QEMU_on_Windows.md)
 - [05/Mar/2023: XRDP setup](posts/2023.03.05-20.07.12/XRDP_setup.md)
 - [05/Mar/2023: GCC and __attribute__((packed)) in Linux & Windows](posts/2023.03.05-20.09.41/GCC_and_attribute_packed_in_Linux_Windows.md)
+- [05/Mar/2023: console injection](posts/2023.03.05-20.11.49/console_injection.md)
