@@ -24,3 +24,4 @@
 - [Native UnitTest Visual Studio](posts/2023.03.05-21.18.40/UnitTest_in_Visual_Studio_Native_Unit_Test_Project_.md)
 - [NGINX configs](posts/2023.03.05-22.25.42/NGINX_configs.md)
 - [VSCode in Browser](posts/2023.03.05-23.20.36/VSCode_in_Browser.md)
+- [html diff](posts/2023.03.07-00.01.11/html_diff.md)
