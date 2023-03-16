@@ -13,6 +13,7 @@
 `appwiz.cpl` Install/Uninstall software.
 
 `netplwiz` Config to allow login without password
+-   This checkbox disapeared in Windows 10! Bring it back with: `reg ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device" /v DevicePasswordLessBuildVersion /t REG_DWORD /d 0 /f`
 
 `sysdm.cpl` System properties; Env vars; Enable remote desktop access
 
