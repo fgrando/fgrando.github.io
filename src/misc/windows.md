@@ -21,7 +21,7 @@
 
 `Intl.cpl` Regional settings dialog.
 
-
+`mmsys.cpl` Sound settings.
 ## Keyboard Shortcuts
 
 `Windows + r` Run
