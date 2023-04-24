@@ -27,3 +27,4 @@
 - [VSCode in Browser](posts/2023.03.05-23.20.36/VSCode_in_Browser.md)
 - [html diff](posts/2023.03.07-00.01.11/html_diff.md)
 - [build windows .exe in linux](posts/2023.03.07-21.48.07/build_windows_exe_in_linux.md)
+- [List big files in python](posts/2023.04.25-00.07.09/List_big_files_in_python.md)

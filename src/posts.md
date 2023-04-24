@@ -27,3 +27,4 @@ This is my [blog](about.md), mostly with code snippets and interesting stuff - l
 - [05/Mar/2023: VSCode in Browser](posts/2023.03.05-23.20.36/VSCode_in_Browser.md)
 - [07/Mar/2023: html diff](posts/2023.03.07-00.01.11/html_diff.md)
 - [07/Mar/2023: build windows .exe in linux](posts/2023.03.07-21.48.07/build_windows_exe_in_linux.md)
+- [25/Apr/2023: List big files in python](posts/2023.04.25-00.07.09/List_big_files_in_python.md)
