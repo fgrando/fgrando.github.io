@@ -5,7 +5,7 @@ import datetime
 import os
 import re
 
-if len(sys.argv) < 2:
+if len(sys.argv) < 2 or sys.argv[1]==os.path.basename(__file__):
     print("please input a title for this post")
     exit(1)
 
