@@ -33,6 +33,7 @@ ser.close()
 
 ### Waveforms
 In this adapter, the idle level is low:
+
 ![:)](windows-rs232.1.bmp)
 ![:)](windows-rs232.2.bmp)
 ![:)](windows-rs232.3.bmp)
@@ -57,6 +58,7 @@ void loop() {
 ```
 ### Waveforms
 Idle level is high:
+
 ![:)](arduino-rs232.3.bmp)
 ![:)](arduino-rs232.1.bmp)
 ![:)](arduino-rs232.2.bmp)
