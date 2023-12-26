@@ -30,3 +30,4 @@
 - [List big files in python](posts/2023.04.25-00.07.09/List_big_files_in_python.md)
 - [RS232 Transmission](posts/2023.07.16-09.47.32/RS232_Transmission.md)
 - [Windows XP notes](posts/2023.07.30-16.53.01/Windows_XP_notes.md)
+- [List file size in disk](posts/2023.12.26-11.10.34/List_file_size_in_disk.md)
