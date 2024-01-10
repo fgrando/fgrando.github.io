@@ -32,3 +32,4 @@
 - [Windows XP notes](posts/2023.07.30-16.53.01/Windows_XP_notes.md)
 - [List file size in disk](posts/2023.12.26-11.10.34/List_file_size_in_disk.md)
 - [hdf5 building and testing](posts/2024.01.07-16.40.06/hdf5_building_and_testing.md)
+- [Toshiba Satellite 4000CDT](posts/2024.01.10-21.46.02/Toshiba_Satellite_4000CDT.md)
