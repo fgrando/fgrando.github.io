@@ -12,8 +12,11 @@
 Manufacture year: 1997
 
 # Useful links:
-- https://www.computinghistory.org.uk/det/46780/Toshiba-Satellite-S4000CDS-4-0/
-- https://archive.org/details/4000-4010-4020-rc-2-win-98-disc-1
+- About the model: https://www.computinghistory.org.uk/det/46780/Toshiba-Satellite-S4000CDS-4-0/
+- Recovery image (german) https://archive.org/details/4000-4010-4020-rc-2-win-98-disc-1
+- Service manuals: https://www.minuszerodegrees.net/manuals/Toshiba/Atlas/Toshiba_Atlas.htm
+- Overall info about Toshibas: https://www.minuszerodegrees.net/manuals/Toshiba/Toshiba.htm
+- SETUP programs: https://www.minuszerodegrees.net/manuals/Toshiba/Setup/Toshiba_setup.htm
 
 
 ## Error Messages (so far...)
@@ -22,6 +25,85 @@ Manufacture year: 1997
     Check system. Then press [F1] key.
 
 Not sure if F1 key works, I press and it does nothing.
+
+Related posts:
+- Bad RTC Battery/Bad Checksum (CMOS) BIOS Error on Bootup
+: https://support.dynabook.com/support/viewContentDetail?soid=355107
+
+
+From [Toshiba Satellite 100CS - Maintenance Manual.pdf](Toshiba%20Satellite%20100CS%20-%20Maintenance%20Manual.pdf) we see the following troubleshooting section (MAY NOT BE APPLICABLE TO THIS MODEL):
+```
+2.4 System Board and HDD I/F Board Troubleshooting
+
+This section describes how to determine if the system board and sound board are defective or not functioning properly. Start with Procedure 1 and continue with the other procedures as instructed. The procedures described in this section are:
+    Procedure 1: Message Check
+    Procedure 2: Printer Port LED Check on Boot Mode
+    Procedure 3: Printer Port LED Check on Resume Mode
+    Procedure 4: Diagnostic Test Program Execution Check
+    Procedure 5: Replacement Check
+
+Procedure 1 Message Check
+    When the power is turned on, the system performs the Initial Reliability Test (IRT) installed in the BIOS ROM. The IRT tests each IC on the system board and initializes it.
+    ❑ If an error message is shown on the display, perform Check 1.
+    ❑ If there is no error message, go to Procedure 2.
+    ❑ If the Toshiba MS-DOS is properly loaded, go to Procedure 3.
+
+Check 1
+
+    If one of the following error messages is displayed on the screen, press the F1 key as the message instructs. These errors occur when the system configuration preserved in the RTC memory (CMOS type memory) is not the same as the actual
+configuration or when the data is lost.
+
+    If you press the F1 key as the message instructs, the system configuration in the
+RTC memory configuration is set to the default setting. If error message (b) appears often when the power is turned on, replace the RTC battery. If any other error message is displayed, perform Check 2.
+    (a) *** Bad HDD type ***
+    Check system. Then press [F1] key ......
+    (b) *** Bad RTC battery ***
+    Check system. Then press [F1] key ......
+    (c) *** Bad configuration ***
+    Check system. Then press [F1] key ......
+    (d) *** Bad memory size ***
+    Check system. Then press [F1] key ......
+    (e) *** Bad time function ***
+    Check system. Then press [F1] key ......
+
+    (f) *** Bad check sum (CMOS) ***
+    Check system. Then press [F1] key ......
+
+    (g) *** Bad check sum (ROM) ***
+    Check system. Then press [F1] key ......
+
+```
+
+From [Satellite P300/ProP300](Satellite%20P300%20and%20Satellite%20Pro%20P300%20Maintenance%20Manual.pdf) we see the following troubleshooting section (MAY NOT BE APPLICABLE TO THIS MODEL):
+```
+Procedure 1 Message Check
+    When the power is turned on, the system performs the Power On Self Test (POST) installed in the BIOS ROM. The POST tests each IC on the system board and initializes it.
+     If an error message is shown on the display, perform Check 1.
+     If there is no error message, go to Procedure 2.
+     If MS-DOS or Windows XP is properly loaded, go to Procedure 4.
+
+Check 1
+
+    If one of the following error messages is displayed on the screen, press the F1 key as the message instructs. These errors occur when the system configuration
+preserved in the RTC memory (CMOS type memory) is not the same as the actual configuration or when the data is lost. If you press the F1 key as the message instructs, the SETUP screen appears to set the system configuration. If error message (b) appears often when the power is turned on, replace the RTC battery. If any other error message is displayed,
+perform Check 2.
+    (a) *** Bad HDD type ***
+     Check system. Then press [F1] key ......
+    (b) *** Bad RTC battery ***
+     Check system. Then press [F1] key ......
+    (c) *** Bad configuration ***
+     Check system. Then press [F1] key ......
+    (d) *** Bad memory size ***
+     Check system. Then press [F1] key ......
+    (e) *** Bad time function ***
+     Check system. Then press [F1] key ......
+
+    (f) *** Bad check sum (CMOS) ***
+     Check system. Then press [F1] key ......
+
+    (g) *** Bad check sum (ROM) ***
+     Check system. Then press [F1] key ......
+```
 
 
 ## Key combinations
@@ -54,6 +136,8 @@ is displayed with the following steps:
 I was able to find and generate a workable update diskette using [1400cv82.exe](1400cv82.exe)
 
 Unfortunatelly the link from support is broken: https://support.dynabook.com/support/viewContentDetail?contentId=120386
+
+This indicates that the BIOS for the following models are the same: 4000/4005/4010/4015/4020/4025
 
 ![:](dynabook-broken.png)
 
