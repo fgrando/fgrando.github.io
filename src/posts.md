@@ -34,3 +34,4 @@ This is my [blog](about.md), mostly with code snippets and interesting stuff - l
 - [07/Jan/2024: hdf5 building and testing](posts/2024.01.07-16.40.06/hdf5_building_and_testing.md)
 - [10/Jan/2024: Toshiba Satellite 4000CDT](posts/2024.01.10-21.46.02/Toshiba_Satellite_4000CDT.md)
 - [14/Jan/2024: Setup WRP - Web Rendering Proxy](posts/2024.01.14-13.45.11/Setup_WRP_Web_Rendering_Proxy.md)
+- [14/Jan/2024: Public FTP config with vsftpd](posts/2024.01.14-23.13.49/Public_FTP_config_with_vsftpd.md)
