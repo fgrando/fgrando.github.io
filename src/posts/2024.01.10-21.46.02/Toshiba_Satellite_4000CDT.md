@@ -17,7 +17,7 @@ Manufacture year: 1997
 - Service manuals: https://www.minuszerodegrees.net/manuals/Toshiba/Atlas/Toshiba_Atlas.htm
 - Overall info about Toshibas: https://www.minuszerodegrees.net/manuals/Toshiba/Toshiba.htm
 - SETUP programs: https://www.minuszerodegrees.net/manuals/Toshiba/Setup/Toshiba_setup.htm
-
+- Battery: https://wiki.droids-corp.org/articles/m/a/g/Maggie/Electronics/Accu.html
 
 ## Error Messages (so far...)
 ### Stuck in CMOS
@@ -25,6 +25,8 @@ Manufacture year: 1997
     Check system. Then press [F1] key.
 
 Not sure if F1 key works, I press and it does nothing.
+
+   **UPDATE: some keyboard keys were defective. Pressing F1 via PS/2 keyboard allowed the CMOS to be saved and this message disapeared!**
 
 Related posts:
 - Bad RTC Battery/Bad Checksum (CMOS) BIOS Error on Bootup
