@@ -24,9 +24,10 @@ Manufacture year: 1997
     **** Bad check sum (CMOS) ****
     Check system. Then press [F1] key.
 
-Not sure if F1 key works, I press and it does nothing.
+Not sure if F1 key works, I press and it does nothing!!!
 
    **UPDATE: some keyboard keys were defective. Pressing F1 via PS/2 keyboard allowed the CMOS to be saved and this message disapeared!**
+Some trails in the keyboard membrane were corroded. I could fix it using conductive paint + superglue to put the keyboard back after the plastic rivets were destroyed in disassembly.
 
 Related posts:
 - Bad RTC Battery/Bad Checksum (CMOS) BIOS Error on Bootup
@@ -109,6 +110,12 @@ perform Check 2.
 
 
 ## Key combinations
+
+### C
+Press and hold the `c` key and turn on the computer to boot from CD-ROM. This is useful when using the restoring disks.
+
+### Esc
+Press and hold the `Esc` key and turn on the computer to stop normal boot and enter BIOS.
 
 ### Ctrl + Alt + Del
 Restart the laptop.
