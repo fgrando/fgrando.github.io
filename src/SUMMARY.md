@@ -35,3 +35,4 @@
 - [Toshiba Satellite 4000CDT](posts/2024.01.10-21.46.02/Toshiba_Satellite_4000CDT.md)
 - [Setup WRP - Web Rendering Proxy](posts/2024.01.14-13.45.11/Setup_WRP_Web_Rendering_Proxy.md)
 - [Public FTP config with vsftpd](posts/2024.01.14-23.13.49/Public_FTP_config_with_vsftpd.md)
+- [ACPI MSDM table (PC windows serial)](posts/2024.02.11-09.59.49/ACPI_MSDM_table_PC_windows_serial_.md)

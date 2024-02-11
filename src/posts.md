@@ -35,3 +35,4 @@ This is my [blog](about.md), mostly with code snippets and interesting stuff - l
 - [10/Jan/2024: Toshiba Satellite 4000CDT](posts/2024.01.10-21.46.02/Toshiba_Satellite_4000CDT.md)
 - [14/Jan/2024: Setup WRP - Web Rendering Proxy](posts/2024.01.14-13.45.11/Setup_WRP_Web_Rendering_Proxy.md)
 - [14/Jan/2024: Public FTP config with vsftpd](posts/2024.01.14-23.13.49/Public_FTP_config_with_vsftpd.md)
+- [11/Feb/2024: ACPI MSDM table (PC windows serial)](posts/2024.02.11-09.59.49/ACPI_MSDM_table_PC_windows_serial_.md)
