@@ -88,5 +88,6 @@ Open Group Policy Editor (`gpedit.msc`):
 - Computer Configuration -> Administrative Templates -> Windows Components -> Application compatibility -> Turn off application telemetry.
 - Computer Configuration -> Administrative Templates -> Windows Components -> Data collection and preview builds -> Allow telemetry - 0 (security).
 
-## Sources
-Special thanks to Dr. Rodrigo Cadore and Dr. Ramon Fernandes for those tips.
+## Disable transparency using regedit
+ - `HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize`
+
