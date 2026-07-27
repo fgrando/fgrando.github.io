@@ -13,6 +13,29 @@
            or 
         @Library(value='homelib@25', changelog=false) _
 
+## Node setup
+The node work dir is C:\jenkins
+Download [/winswhttps://github.com/winsw](https://github.com/winsw/winsw/releases/) to C:\jenkins and rename to jenkins-agent.exe
+Create an xml with the service config
+```
+<service>
+  <id>jenkins-agent</id>
+  <name>Jenkins Agent (windao)</name>
+  <description>Jenkins inbound agent</description>
+  <executable>C:\Program Files\Eclipse Adoptium\jdk-17.0.x-hotspot\bin\java.exe</executable>
+  <arguments>-jar "C:\jenkins\agent.jar" -url http://192.168.1.227:8080/ -secret @C:\jenkins\secret-file -name windao -webSocket -workDir "C:\jenkins"</arguments>
+  <workingdirectory>C:\jenkins</workingdirectory>
+  <logmode>rotate</logmode>
+  <onfailure action="restart" delay="10 sec"/>
+</service>
+```
+cd C:\jenkins
+jenkins-agent.exe install
+jenkins-agent.exe start
+
+Adjust the user it is running as:
+Open services.msc → Jenkins Agent → Log On tab → set it to run as your tool account. Otherwise builds fail with missing-tool or license errors.
+
 
 ### Mount a folder to first drive available
 
@@ -299,3 +322,200 @@ def mountFirstAvailableDrive(String folderPath, String driveLetters) {
 }
 ```
 
+### Interaction
+
+```
+def cancelled = false
+try {
+    timeout(time: 10, unit: 'MINUTES') {
+        input message: 'Integrating to trunk. Abort within 10 min to cancel.',
+              ok: 'Cancel merge'
+        cancelled = true            // only reached if a human clicks Cancel
+    }
+} catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
+    cancelled = false               // window elapsed -> proceed
+}
+
+// =============================================================================
+// Gate / hand-over pipeline (Windows agent, SVN backend)
+//
+// Moves a branch:  wip/<branch>  ->  gate/<branch>  ->  trunk (+ merged/<branch>)
+//
+//   - Build & test steps are PLACEHOLDERS (echo). Swap in your real toolchain.
+//   - All SVN operations are REAL.
+//   - The claim-move (wip -> gate) is the per-branch mutex: it is a single
+//     atomic server-side rename, so a second trigger for the same branch cannot
+//     succeed (wip/<branch> no longer exists). The Pre-check stage turns that
+//     hard failure into a friendly message BEFORE attempting the move.
+//   - Global lock('trunk-integration') serializes DIFFERENT branches touching
+//     trunk. It is held only for the short checkout->commit window, NOT during
+//     the 10-min regret timer, so the timer does not block other integrations.
+//   - On failure, only CLEAN verdicts (cancel / merge-conflict / out-of-date
+//     commit) auto-return the branch to wip/. Infra/unknown failures LEAVE the
+//     branch stranded in gate/ and alert — repo state is the source of truth.
+// =============================================================================
+
+def SVN        = 'svn'                       // use an ABSOLUTE path if the agent PATH is unreliable
+def REPO       = 'svn://your-server/repo'
+def LOCK       = 'trunk-integration'
+def REGRET_MIN = 10
+def WC         = 'C:\\ci\\t'                  // deliberately SHORT: dodges MAX_PATH on embedded trees
+
+properties([
+  parameters([
+    string(name: 'WIP_BRANCH', defaultValue: '',
+           description: 'Branch path under wip/, e.g. alice/add-uart')
+  ])
+])
+
+node('windows') {
+
+  if (!params.WIP_BRANCH?.trim()) { error 'WIP_BRANCH is required.' }
+  def branch    = params.WIP_BRANCH.trim().replaceAll('^/+', '').replaceAll('/+$', '')
+  def wipUrl    = "${REPO}/wip/${branch}"
+  def gateUrl   = "${REPO}/gate/${branch}"
+  def mergedUrl = "${REPO}/merged/${branch}"
+  def trunkUrl  = "${REPO}/trunk"
+
+  // svn helpers. '@' suppresses cmd echoing the command, so returnStdout is clean svn output.
+  def svnRc  = { String a -> bat(returnStatus: true, script: "@${SVN} ${a}") }        // exit code, never throws
+  def svnOut = { String a -> bat(returnStdout: true, script: "@${SVN} ${a}").trim() } // stdout, throws on non-zero
+
+  boolean landed = false   // did the change actually reach trunk?
+
+  // -------------------------------------------------------------------------
+  stage('Pre-check') {
+    // Already being integrated?  (claim-move already happened for this branch)
+    if (svnRc("info \"${gateUrl}\"") == 0) {
+      error "REJECTED: '${branch}' is already in gate/ — an integration is in " +
+            "progress. Wait for it to land in merged/ or be returned to wip/. " +
+            "Do NOT re-trigger."
+    }
+    // Already integrated and closed?
+    if (svnRc("info \"${mergedUrl}\"") == 0 && svnRc("info \"${wipUrl}\"") != 0) {
+      error "REJECTED: '${branch}' is already in merged/ — nothing to integrate."
+    }
+    // The WIP branch must exist to claim it.
+    if (svnRc("info \"${wipUrl}\"") != 0) {
+      error "REJECTED: no branch at ${wipUrl}. Check the WIP_BRANCH value."
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  stage('Claim (wip -> gate)') {
+    // Atomic rename = the real mutex. If a concurrent trigger beat us here,
+    // wip/<branch> is gone and this returns non-zero -> reject cleanly.
+    if (svnRc("move \"${wipUrl}\" \"${gateUrl}\" -m \"Claim ${branch} for gating\"") != 0) {
+      error "REJECTED: could not claim '${branch}' (already claimed, or race lost)."
+    }
+  }
+
+  // From here on, a failure can strand the branch in gate/, so wrap everything.
+  try {
+
+    // -----------------------------------------------------------------------
+    boolean cancelled = false
+    stage('Verify + regret window') {
+      parallel(
+        'build-test': {
+          // ---- PLACEHOLDERS: pretend the merged result builds & tests green ----
+          bat 'echo [BUILD] compiling merged result ... OK'
+          bat 'echo [TEST]  running unit tests    ... OK'
+        },
+        'regret': {
+          // NOTE: for production, move this input OUTSIDE the node block so it
+          // does not hold an executor for 10 min. Inline here for a readable example.
+          try {
+            timeout(time: REGRET_MIN, unit: 'MINUTES') {
+              input message: "Integrating '${branch}' to trunk. " +
+                             "Abort within ${REGRET_MIN} min to cancel.",
+                    ok: 'Cancel merge'
+              cancelled = true   // reached ONLY if a human clicks 'Cancel merge'
+            }
+          } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
+            // Distinguish "timer elapsed" (proceed) from "job aborted" (abort everything).
+            boolean timedOut = e.causes.any {
+              it instanceof org.jenkinsci.plugins.workflow.steps.TimeoutStepExecution.ExceededTimeout
+            }
+            if (timedOut) {
+              cancelled = false        // window elapsed -> proceed to integrate
+            } else {
+              throw e                  // genuine abort -> propagate; catch/return handles branch
+            }
+          }
+        }
+      )
+    }
+
+    if (cancelled) {
+      stage('Cancelled -> return to wip') {
+        svnRc("move \"${gateUrl}\" \"${wipUrl}\" " +
+              "-m \"Cancelled within regret window; return ${branch} to wip\"")
+        currentBuild.result = 'ABORTED'
+        error "Cancelled by user; '${branch}' returned to wip/."
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    stage('Integrate to trunk') {
+      lock(LOCK) {   // held only for this short window; other branches wait here, not during regret
+        bat "if exist \"${WC}\" ( ${SVN} cleanup \"${WC}\" & rmdir /s /q \"${WC}\" )"
+        bat "${SVN} checkout \"${trunkUrl}\" \"${WC}\""
+
+        dir(WC) {
+          // Real merge of the gated branch into a fresh trunk WC at HEAD.
+          // --accept postpone returns 0 even with conflicts; svn prints a
+          // "Summary of conflicts" line to stdout when any occurred.
+          def mergeOut = svnOut("merge --accept postpone \"${gateUrl}\" .")
+          echo mergeOut
+          if (mergeOut.contains('Summary of conflicts')) {
+            bat "${SVN} revert -R ."
+            // CLEAN verdict (rejection): safe to auto-return to wip.
+            svnRc("move \"${gateUrl}\" \"${wipUrl}\" " +
+                  "-m \"Merge conflict vs trunk; return ${branch} to wip\"")
+            error "REJECTED: '${branch}' conflicts with current trunk. " +
+                  "Sync trunk into your branch, resolve, then re-hand-over."
+          }
+
+          // ---- PLACEHOLDERS: authoritative build & test of the merged trunk ----
+          bat 'echo [BUILD] compiling merged trunk ... OK'
+          bat 'echo [TEST]  running tests on trunk ... OK'
+          // In real life: on non-zero -> `svn revert -R .`, move gate->wip, error (CLEAN verdict).
+
+          // Commit trunk. Out-of-date -> nothing landed -> safe to auto-return.
+          if (svnRc("commit -m \"Gated merge of ${branch} (verified)\"") != 0) {
+            bat "${SVN} revert -R ."
+            svnRc("move \"${gateUrl}\" \"${wipUrl}\" " +
+                  "-m \"Trunk commit failed (out-of-date?); return ${branch}\"")
+            error "Trunk commit failed (likely out-of-date). " +
+                  "'${branch}' returned to wip/; re-hand-over."
+          }
+          landed = true   // <-- past this line, the change IS on trunk
+        }
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    stage('Archive (gate -> merged)') {
+      if (svnRc("move \"${gateUrl}\" \"${mergedUrl}\" -m \"Integrated ${branch} to trunk\"") != 0) {
+        // Trunk already has the change: do NOT return to wip. Leave in gate/, flag for human.
+        currentBuild.result = 'UNSTABLE'
+        echo "POST-COMMIT: trunk updated but archive move failed. " +
+             "'${branch}' left in gate/ for MANUAL archival to merged/. Do NOT return to wip."
+        // TODO: notify ops here.
+      }
+    }
+
+  } catch (err) {
+    // Trust repo state, not flags: is the branch still stranded in gate/?
+    boolean stillInGate = (svnRc("info \"${gateUrl}\"") == 0)
+    if (stillInGate && !landed) {
+      // Infra / unknown failure before any verdict: leave it, alert. Never auto-return here.
+      echo "INFRA/UNKNOWN failure before a verdict. Leaving '${branch}' in gate/ " +
+           "for a human. NOT auto-returning to wip/."
+      // TODO: notify ops here.
+    }
+    throw err
+  }
+}
+```
