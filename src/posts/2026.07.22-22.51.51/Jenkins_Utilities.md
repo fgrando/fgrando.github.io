@@ -589,3 +589,181 @@ each json with version information like
   ]
 }
 ```
+
+
+```
+// vars/registerLoadPackage.groovy
+//
+// Jenkins Shared Library step: build a loaddb record (schema 2) for a load
+// package and commit it to the records repo (SVN).
+//
+// Usage from a Jenkinsfile (after the load package is built & archived):
+//
+//   registerLoadPackage(
+//     loadPackage    : 'build/load_package.bin',        // path in the workspace
+//     componentManifest: 'build/components.json',       // {name:crc32} or [{component,crc32}]
+//     recordsRepoUrl : 'svn://scm.example/loaddb/packages',
+//     credentialsId  : 'svn-records',                   // SVN user/pass credential
+//     notes          : params.NOTES ?: env.SVN_COMMIT_MSG
+//   )
+//
+// Data sources (all overridable via args):
+//   load_package_md5  : md5 of loadPackage, computed on the agent
+//   jenkins_build_url : "${BUILD_URL}artifact/${artifactRelPath}"
+//   svn_url/revision  : env.SVN_URL / env.SVN_REVISION (source checkout)
+//   components/crc32  : from componentManifest, or an inline `components` map
+//
+// The build is responsible for emitting the per-component CRC32s (the values
+// it embedded into each image) into componentManifest. This step does not
+// extract CRCs from binaries, since their offset/layout is target specific.
+
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+def call(Map args = [:]) {
+    // ---- required -------------------------------------------------------
+    String loadPackage    = args.loadPackage    ?: error('registerLoadPackage: loadPackage is required')
+    String recordsRepoUrl = args.recordsRepoUrl ?: error('registerLoadPackage: recordsRepoUrl is required')
+
+    // ---- defaults (mostly from the build environment) -------------------
+    int    schemaVersion   = (args.schemaVersion ?: 2) as int
+    String srcUrl          = args.srcUrl       ?: env.SVN_URL      ?: env.SVN_URL_1      ?: ''
+    String srcRevision     = args.srcRevision  ?: env.SVN_REVISION ?: env.SVN_REVISION_1 ?: ''
+    String notes           = (args.notes ?: '') as String
+    String credentialsId   = args.credentialsId   ?: 'svn-records'
+    String artifactRelPath = args.artifactRelPath ?: loadPackage   // path as archived
+
+    // ---- gather the pieces ---------------------------------------------
+    Map    components  = resolveComponents(args)
+    String md5         = md5OfFile(loadPackage)
+    String artifactUrl = "${env.BUILD_URL}artifact/${artifactRelPath}"
+    String json        = buildRecordJson(schemaVersion, md5, artifactUrl,
+                                         srcUrl, srcRevision, notes, components)
+
+    // ---- write + commit -------------------------------------------------
+    boolean committed = commitRecord(recordsRepoUrl, credentialsId, md5, json, srcRevision)
+    echo committed ? "loaddb: registered ${md5} (${components.size()} components)"
+                   : "loaddb: ${md5} already present, nothing to commit"
+    return md5
+}
+
+// ---------------------------------------------------------------------------
+// component resolution
+// ---------------------------------------------------------------------------
+
+Map resolveComponents(Map args) {
+    if (args.components instanceof Map) {
+        return normalizeCrcMap(args.components)
+    }
+    if (args.componentManifest) {
+        String txt = readFile(file: args.componentManifest)   // reads the agent workspace
+        return parseManifest(txt)
+    }
+    error('registerLoadPackage: provide components (Map name->crc32) or componentManifest (path)')
+}
+
+@NonCPS
+Map parseManifest(String txt) {
+    def parsed = new JsonSlurper().parseText(txt)
+    def out = [:]
+    if (parsed instanceof Map) {
+        parsed.each { k, v -> out[k.toString()] = normCrc(v.toString()) }
+    } else if (parsed instanceof List) {
+        parsed.each { item -> out[item.component.toString()] = normCrc(item.crc32.toString()) }
+    } else {
+        throw new IllegalArgumentException('component manifest must be a JSON object or list')
+    }
+    return out
+}
+
+@NonCPS
+Map normalizeCrcMap(Map m) {
+    def out = [:]
+    m.each { k, v -> out[k.toString()] = normCrc(v.toString()) }
+    return out
+}
+
+@NonCPS
+String normCrc(String v) {
+    String n = v.trim().toLowerCase()
+    if (n.startsWith('0x')) n = n.substring(2)
+    return '0x' + n.padLeft(8, '0')
+}
+
+// ---------------------------------------------------------------------------
+// record construction (pure, CPS-safe)
+// ---------------------------------------------------------------------------
+
+@NonCPS
+String buildRecordJson(int schema, String md5, String artifactUrl,
+                       String srcUrl, String srcRev, String notes, Map components) {
+    def rec = [
+        schema_version   : schema,
+        load_package_md5 : md5,
+        jenkins_build_url: artifactUrl,
+        svn_url          : srcUrl,
+        svn_revision     : srcRev,
+        notes            : notes,
+        components       : components.collect { name, crc -> [component: name, crc32: crc] }
+    ]
+    return JsonOutput.prettyPrint(JsonOutput.toJson(rec)) + '\n'
+}
+
+// ---------------------------------------------------------------------------
+// md5 on the agent (where the file actually lives)
+// ---------------------------------------------------------------------------
+
+String md5OfFile(String path) {
+    if (isUnix()) {
+        return sh(returnStdout: true,
+                  script: "md5sum \"${path}\" | cut -d' ' -f1").trim().toLowerCase()
+    }
+    // Windows: certutil prints the hash on its own line
+    String out = bat(returnStdout: true,
+                     script: "@certutil -hashfile \"${path}\" MD5").trim()
+    def hex = out.readLines().collect { it.trim() }.find { it ==~ /(?i)[0-9a-f]{32}/ }
+    if (!hex) error("could not parse md5 from certutil output:\n${out}")
+    return hex.toLowerCase()
+}
+
+// ---------------------------------------------------------------------------
+// SVN commit (idempotent on the load_package_md5)
+// ---------------------------------------------------------------------------
+
+boolean commitRecord(String repoUrl, String credId, String md5, String json, String srcRev) {
+    String file    = "${md5}.json"
+    String fileUrl = "${repoUrl}/${file}"
+    boolean committed = false
+
+    withCredentials([usernamePassword(credentialsId: credId,
+                                      usernameVariable: 'SVN_U',
+                                      passwordVariable: 'SVN_P')]) {
+        if (svn("info \"${fileUrl}\"", true) == 0) {
+            return false                       // this exact package already recorded
+        }
+        dir('.loaddb-wc') {
+            deleteDir()
+            svn("checkout --depth empty \"${repoUrl}\" .")   // no need to pull existing records
+            writeFile file: file, text: json
+            svn("add \"${file}\"")
+            svn("commit -m \"loaddb: register ${md5} (src ${srcRev})\" \"${file}\"")
+            committed = true
+        }
+    }
+    return committed
+}
+
+// Run an svn command with injected credentials. Returns exit status when
+// status==true, otherwise throws on non-zero. $SVN_U/$SVN_P come from
+// withCredentials; reference syntax differs between sh and bat.
+def svn(String argsLine, boolean status = false) {
+    if (isUnix()) {
+        String auth = '--username "$SVN_U" --password "$SVN_P" ' +
+                      '--no-auth-cache --non-interactive --trust-server-cert'
+        return sh(returnStatus: status, script: "svn ${auth} ${argsLine}")
+    }
+    String auth = '--username "%SVN_U%" --password "%SVN_P%" ' +
+                  '--no-auth-cache --non-interactive --trust-server-cert'
+    return bat(returnStatus: status, script: "svn ${auth} ${argsLine}")
+}
+```
