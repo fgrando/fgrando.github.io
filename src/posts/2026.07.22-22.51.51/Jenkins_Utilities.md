@@ -519,3 +519,73 @@ node('windows') {
   }
 }
 ```
+
+
+## Retriving data
+Auth (almost always needed). Use an API token, not your password — generate it under User → Configure → API Token.
+
+```
+# wget
+wget --auth-no-challenge --user=<user> --password=<api_token> \
+     https://jenkins.example/job/app-fw/512/artifact/build/firmware.bin
+
+# curl (often cleaner)
+curl -fsSL -u <user>:<api_token> \
+     https://jenkins.example/job/app-fw/512/artifact/build/firmware.bin -o firmware.bin
+```
+
+
+Finding the exact path programmatically — the build's JSON API lists artifacts:
+```
+bash
+curl -s -u <user>:<tok> \
+  "https://jenkins.example/job/app-fw/512/api/json?tree=artifacts[relativePath]"
+```
+
+### Artifactory replacement
+| **Artifactory feature**            | **Useful?**        | **Minimal equivalent**                                        |
+| ---------------------------------- | ------------------- | ------------------------------------------------------------------ |
+| Content-addressed store + dedup    | **Yes - core**      | file-per-key JSON, sharded dir                                     |
+| Properties / metadata on artifacts | **Yes**             | the JSON record fields                                             |
+| Build Info (CI → artifact linkage) | **Yes**             | Jenkins writes commit + build # into the record                    |
+| Search / query (AQL)               | Light               | dict lookup by key; filter by tag/date in Python                   |
+| Immutability / retention           | **Yes**             | append-only records, never rewrite; VCS history is the audit trail |
+| Checksum verification              | Optional            | recompute CRC over region vs stored field                          |
+| Promotion / staging (dev→release)  | Optional            | a status field or rc/release/ subdirs                              |
+| Binary storage / re-download       | Optional            | bins kept as jenkins artifacts                                     |
+| Access control                     | **Skip**            | VCS repo permissions cover it                                      |
+| REST API / web UI                  | **Skip**            | CLI + git/svn                                                      |
+| Replication / HA                   | **Skip**            | the VCS repo is already distributed                                |
+| Virtual/remote repos, proxying     | **Skip**            | irrelevant to your use case                                        |
+
+Stored in jenkins as
+
+      ARTIFACT_REL="build/load_package.bin"       # path relative to archive root
+      ARTIFACT_URL="${BUILD_URL}artifact/${ARTIFACT_REL}"
+      # -> https://jenkins.example/job/app-fw/512/artifact/build/load_package.bin
+      or query:
+      curl -fsS -u "$U:$T" "${BUILD_URL}api/json?tree=artifacts[relativePath,fileName]"
+
+Structure
+
+      releaserecords/
+         README.md
+         records/
+            6413bd...<load_package_md5>.json
+
+each json with version information like
+```json
+{
+  "schema_version": 2,
+  "load_package_md5": "6413bd...(same as file name)",
+  "jenkins_artifact_url": "https://jenkins.example/job/app-fw/530/artifact/build/load_package.bin",
+  "svn_url": "svn://scm.example/app/trunk",
+  "svn_revision": "r18690",
+  "notes": "new telemetry feature",
+  "components": [
+    {"component": "bootloader",  "crc32": "0xc251516f"},
+    {"component": "application", "crc32": "0x082f23c5"},
+    {"component": "gainconfig",  "crc32": "0x174fe53c"}
+  ]
+}
+```
