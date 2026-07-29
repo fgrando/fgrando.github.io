@@ -10,3 +10,7 @@ svn rm oldbranch
 svn cp ^/trunk oldbranch
 svn commit -m "Re-branch oldbranch from trunk@HEAD"
 ```
+
+## SVN Credentials
+When automating SVN commands always include the flags `--no-auth-cache --non-interactive --trust-server-cert`
+If user and pass are defined in env vars add also: `--username "%SVN_U%" --password "%SVN_P%"`
