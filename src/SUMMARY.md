@@ -37,3 +37,4 @@
 - [Public FTP config with vsftpd](posts/2024.01.14-23.13.49/Public_FTP_config_with_vsftpd.md)
 - [ACPI MSDM table (PC windows serial)](posts/2024.02.11-09.59.49/ACPI_MSDM_table_PC_windows_serial_.md)
 - [Jenkins Utilities](posts/2026.07.22-22.51.51/Jenkins_Utilities.md)
+- [SVN usage notes](posts/2026.07.29-22.42.08/SVN_usage_notes.md)
