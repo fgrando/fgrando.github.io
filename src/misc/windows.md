@@ -91,3 +91,28 @@ Open Group Policy Editor (`gpedit.msc`):
 ## Disable transparency using regedit
  - `HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize`
 
+## Bat scripts as makefile targets
+To use bat scripts as aliases for makefile targets in subfolders use `%~dp0` in the path, so
+the scipt path is relative to the location of the bat, and not to the %CD% where the bat was called.
+For example:
+
+    C:\OPT
+    └───ci
+        │   runall.bat
+        │   runtest.bat
+        │
+        └───fd
+            └───proj
+                    release.mk
+
+
+    C:\opt>make -f ci\jk\proj\release.mk all
+    target all
+
+    C:\opt>ci\runall.bat
+    target all
+
+    C:\opt>cat ci\runall.bat
+    @echo off
+
+    make -f "%~dp0fd/proj/release.mk" all
