@@ -62,3 +62,7 @@ Result, both commands succeed:
     -r123 ^/deps/libmath/version.h  ->  #define LIBMATH_VERSION "libmath-ng 0.1"
 
 No error, no warning. The operative-only form went to HEAD, found that `/deps/libmath` is now the ng line of history, walked that line back to r123, and handed you a different library. Your pin still says 123 and it is still resolving faithfully — **to the wrong component**.
+
+## Setup with export
+
+    bash -c "svn export --force http://192.168.1.x/svn/myapp/trunk ci > /dev/null && bash ci/intro.sh"
