@@ -574,3 +574,59 @@ def svn(String argsLine, boolean status = false) {
     return bat(returnStatus: status, script: "svn ${auth} ${argsLine}")
 }
 ```
+
+
+
+## Archived items as state data
+```
+// vars/state.groovy
+import groovy.transform.Field
+
+@Field static final String STATE_DIR = '.ci_state'
+
+@NonCPS
+private static boolean isValidKey(String k) {
+    if (!k) return false
+    if (k.startsWith('/') || k ==~ /^[A-Za-z]:.*/) return false        // absolute / drive path
+    if (!(k ==~ /[A-Za-z0-9._\/-]+/)) return false                     // whitelist chars
+    for (String seg : k.split('/', -1)) {
+        if (seg in ['', '.', '..']) return false                        // no traversal, no '//'
+    }
+    return true
+}
+
+/** Map a key to a workspace-relative path under .ci_state. */
+String pathFor(String key) {
+    String k = (key ?: '').replace('\\', '/')
+    if (!isValidKey(k)) error "state: invalid key '${key}'"
+    return "${STATE_DIR}/${k}"
+}
+
+/** Run body at the workspace root, ignoring any enclosing dir(). */
+def withStateRoot(Closure body) {
+    if (!env.WORKSPACE) error 'state: must be called inside node {}'
+    return dir(env.WORKSPACE) { body() }
+}
+
+/** Save a file (already at .ci_state/<key>) or a text value under <key>. */
+void save(String key, String text = null) {
+    String p = pathFor(key)
+    withStateRoot {
+        if (text != null) writeFile file: p, text: text
+        if (!fileExists(p)) error "state: nothing to save at ${p}"
+        archiveArtifacts artifacts: p, fingerprint: false
+    }
+}
+
+/** Load <key> from the last successful build; returns text or null. */
+String load(String key, String job = env.JOB_NAME) {
+    String p = pathFor(key)
+    String result = null
+    withStateRoot {
+        copyArtifacts projectName: job, selector: lastSuccessful(),
+                      filter: p, target: '.', optional: true
+        if (fileExists(p)) result = readFile(p)
+    }
+    return result
+}
+```
