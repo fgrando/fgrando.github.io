@@ -39,3 +39,4 @@
 - [Jenkins Utilities](posts/2026.07.22-22.51.51/Jenkins_Utilities.md)
 - [SVN usage notes](posts/2026.07.29-22.42.08/SVN_usage_notes.md)
 - [Borg notes](posts/2026.08.10-21.11.14/Borg_notes.md)
+- [cygwin notes](posts/2026.10.08-20.40.20/cygwin_notes.md)

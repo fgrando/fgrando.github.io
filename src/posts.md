@@ -39,3 +39,4 @@ This is my [blog](about.md), mostly with code snippets and interesting stuff - l
 - [22/Jul/2026: Jenkins Utilities](posts/2026.07.22-22.51.51/Jenkins_Utilities.md)
 - [29/Jul/2026: SVN usage notes](posts/2026.07.29-22.42.08/SVN_usage_notes.md)
 - [10/Aug/2026: Borg notes](posts/2026.08.10-21.11.14/Borg_notes.md)
+- [08/Oct/2026: cygwin notes](posts/2026.10.08-20.40.20/cygwin_notes.md)
