@@ -31,6 +31,17 @@ info:
 
 ```
 
+# file search
+```bat
+dir /s /b "C:\folder\this-file-name.txt"
+where /r C:\folder this-file-name.txt
+```
+- dir /s /b searches all subfolders and prints the full path of each match.
+- where /r does the same and is easier to use in if checks. Add /q for no output, just the exit code.
+
+Both dir and where set ERRORLEVEL to 1 when nothing is found, so ... >nul 2>&1 && echo found works.
+
+
 # SVN
 
 ```bat
@@ -99,4 +110,47 @@ set "RC=%ERRORLEVEL%"
 echo ERROR: svn command failed with exit code %RC%.
 echo        If the working copy is locked, run: svn cleanup "%WC%"
 endlocal & exit /b 1
+```
+
+# tee replacement
+```bat
+@echo off
+rem make_with_log.bat - two ways to run make with live output AND a log file
+rem   1. GNU tee from Cygwin (needs Cygwin)
+rem   2. Pure Windows: built-in PowerShell, no admin rights, no Cygwin
+rem Both log stdout + stderr and keep make's exit code (pipefail behaviour).
+setlocal
+
+set "CYG_BIN=C:\cygwin64\bin"
+
+rem ---- 1. Cygwin tee --------------------------------------------------------
+rem tee is called as /usr/bin/tee, so it works even if Cygwin's bin folder
+rem is not on PATH; make is found the same way as in your original command.
+"%CYG_BIN%\bash.exe" -c "set -o pipefail && make all 2>&1 | /usr/bin/tee out_tee.log"
+set "RC_TEE=%ERRORLEVEL%"
+
+rem ---- 2. PowerShell (pure Windows) -------------------------------------------
+call :tee_run out_ps.log make all
+set "RC_PS=%ERRORLEVEL%"
+
+echo.
+echo Cygwin tee : exit code %RC_TEE%, log out_tee.log
+echo PowerShell : exit code %RC_PS%, log out_ps.log
+exit /b %RC_PS%
+
+
+rem ===========================================================================
+rem  :tee_run <logfile> <command ...>
+rem  Runs the command, prints its output live and writes it to <logfile> (ANSI,
+rem  overwritten each run). Returns the command's exit code.
+rem ===========================================================================
+:tee_run
+setlocal
+set "TEE_LOG=%~f1"
+rem Command = all arguments after the first one.
+set "TEE_CMD=%*"
+call set "TEE_CMD=%%TEE_CMD:*%1=%%"
+if exist "%TEE_LOG%" del "%TEE_LOG%"
+powershell -NoProfile -NonInteractive -Command "cmd /c ($env:TEE_CMD + ' 2>&1') | ForEach-Object { $_; Add-Content -LiteralPath $env:TEE_LOG -Value $_ -Encoding Default }; exit $LASTEXITCODE"
+endlocal & exit /b %ERRORLEVEL%
 ```
